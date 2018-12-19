@@ -1,4 +1,6 @@
-﻿using System.Net.Http;
+﻿using System;
+using System.Net.Http;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TestApp.Core.FileStorage.Interfaces;
 
@@ -18,9 +20,10 @@ namespace TestApp.Monolith.Controllers
         [Route("upload")]
         [HttpPost]
         [ProducesResponseType(200)]
-        public IActionResult Upload()
+        [Consumes("multipart/form-data")]
+        public IActionResult Upload(IFormFile file)
         {
-            return this.Ok();
+            return this.Ok(this._fileRepository.SaveFile(file.FileName, file.OpenReadStream()));
         }
     }
 }

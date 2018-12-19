@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.IO;
+using System.Threading.Tasks;
 using TestApp.Core.Models.Analysis;
 
 namespace TestApp.Core.FileStorage.Interfaces
@@ -12,5 +13,7 @@ namespace TestApp.Core.FileStorage.Interfaces
         Task<string> SaveAnalysisResult(AnalysisResult result, string name);
 
         Task<string> SaveComparisonResult(AnalysisResult result, string name);
+
+        bool SaveFile(string name, Stream stream);
     }
 }
