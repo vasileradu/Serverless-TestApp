@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
@@ -64,6 +63,19 @@ namespace TestApp.Core.FileStorage.Repositories
             Task.WaitAll(File.WriteAllTextAsync(Path.Combine(this._reportsPath, fileName), content));
 
             return Task.FromResult(fileName);
+        }
+
+        public bool SaveFile(string name, Stream stream)
+        {
+            string path = Path.Combine(this._uploadsPath, $"upload_{Guid.NewGuid()}_{name}");
+
+            using(stream)
+            using (var output = File.Open(path, FileMode.Create))
+            {
+                Task.WaitAll(stream.CopyToAsync(output));
+            }
+
+            return true;
         }
     }
 }
