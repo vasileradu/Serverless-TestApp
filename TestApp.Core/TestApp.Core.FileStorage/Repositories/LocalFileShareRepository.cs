@@ -13,13 +13,15 @@ namespace TestApp.Core.FileStorage.Repositories
     {
         private readonly Dictionary<string, object> _analysisStore;
         private readonly Dictionary<string, object> _comparisonStore;
-        private readonly string _rootPath;
+        private readonly string _uploadsPath;
+        private readonly string _reportsPath;
 
-        public LocalFileShareRepository(string rootPath)
+        public LocalFileShareRepository(string uploadsPath, string reportsPath)
         {
             this._analysisStore = new Dictionary<string, object>();
             this._comparisonStore = new Dictionary<string, object>();
-            this._rootPath = rootPath;
+            this._uploadsPath = uploadsPath;
+            this._reportsPath = reportsPath;
         }
 
         public Task<AnalysisResult> GetAnalysisResult(string name)
@@ -36,7 +38,7 @@ namespace TestApp.Core.FileStorage.Repositories
 
         public Task<string> GetRawData(string name)
         {
-            return File.ReadAllTextAsync(Path.Combine(this._rootPath, name));
+            return File.ReadAllTextAsync(Path.Combine(this._uploadsPath, name));
         }
 
         public Task<string> SaveAnalysisResult(AnalysisResult result, string name)
