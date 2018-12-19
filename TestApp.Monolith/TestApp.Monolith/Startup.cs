@@ -4,8 +4,8 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using TestApp.Core.FileStorage.Interfaces;
@@ -34,6 +34,11 @@ namespace TestApp.Monolith
                     this.Configuration["Storage:Locations:Uploads"]),
                 Path.Combine(this.Configuration["Storage:Locations:Root"],
                     this.Configuration["Storage:Locations:Reports"])));
+
+            services.Configure<FormOptions>(options =>
+            {
+                options.MultipartBodyLengthLimit = this.GetConfigToInt("Upload:SizeLimitBytes");
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -66,6 +71,16 @@ namespace TestApp.Monolith
             });
 
             app.UseMvc();
+        }
+
+        private int GetConfigToInt(string key, int defaultValue = 0)
+        {
+            if (!int.TryParse(this.Configuration[key], out int result))
+            {
+                result = defaultValue;
+            }
+
+            return result;
         }
     }
 }
