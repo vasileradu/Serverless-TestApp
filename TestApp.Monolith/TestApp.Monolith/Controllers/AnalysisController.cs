@@ -70,7 +70,7 @@ namespace TestApp.Monolith.Controllers
             var seed = tasks.First().Result;
 
             var result = await this._fileRepository.SaveComparisonResult(
-                tasks.Aggregate(seed, (accumulator, t) => accumulator.Intersect(t.Result)),
+                tasks.Aggregate(seed, (accumulator, t) => accumulator.Intersect(t.Result, name, length)),
                 name);
 
             return this.Ok(result);

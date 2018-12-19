@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 using TestApp.Core.FileStorage.Interfaces;
 using TestApp.Core.Models.Analysis;
 
@@ -11,15 +13,11 @@ namespace TestApp.Core.FileStorage.Repositories
     /// </summary>
     public class LocalFileShareRepository : IDataRepository
     {
-        private readonly Dictionary<string, object> _analysisStore;
-        private readonly Dictionary<string, object> _comparisonStore;
         private readonly string _uploadsPath;
         private readonly string _reportsPath;
 
         public LocalFileShareRepository(string uploadsPath, string reportsPath)
         {
-            this._analysisStore = new Dictionary<string, object>();
-            this._comparisonStore = new Dictionary<string, object>();
             this._uploadsPath = uploadsPath;
             this._reportsPath = reportsPath;
         }
@@ -28,9 +26,14 @@ namespace TestApp.Core.FileStorage.Repositories
         {
             var result = new AnalysisResult();
 
-            if (this._analysisStore.ContainsKey(name))
+            var path = Path.Combine(this._reportsPath, name);
+
+            if (File.Exists(path))
             {
-                result = this._analysisStore[name] as AnalysisResult;
+                var readTask = File.ReadAllTextAsync(path);
+                Task.WaitAll(readTask);
+
+                result = JsonConvert.DeserializeObject<AnalysisResult>(readTask.Result);
             }
 
             return Task.FromResult(result);
@@ -43,32 +46,22 @@ namespace TestApp.Core.FileStorage.Repositories
 
         public Task<string> SaveAnalysisResult(AnalysisResult result, string name)
         {
-            var fileName = $"analysis_{name}_{result.Sequences.Count}.json";
+            var fileName = $"analysis_{name}_{Guid.NewGuid()}.json";
 
-            if (this._analysisStore.ContainsKey(fileName))
-            {
-                this._analysisStore[fileName] = result;
-            }
-            else
-            {
-                this._analysisStore.Add(fileName, result);
-            }
+            var content = JsonConvert.SerializeObject(result);
+
+            Task.WaitAll(File.WriteAllTextAsync(Path.Combine(this._reportsPath, fileName), content));
 
             return Task.FromResult(fileName);
         }
 
         public Task<string> SaveComparisonResult(AnalysisResult result, string name)
         {
-            var fileName = $"comparison_{name}_{result.Sequences.Count}.json";
+            var fileName = $"comparison_{name}_{Guid.NewGuid()}.json";
 
-            if (this._comparisonStore.ContainsKey(fileName))
-            {
-                this._comparisonStore[fileName] = result;
-            }
-            else
-            {
-                this._comparisonStore.Add(fileName, result);
-            }
+            var content = JsonConvert.SerializeObject(result);
+
+            Task.WaitAll(File.WriteAllTextAsync(Path.Combine(this._reportsPath, fileName), content));
 
             return Task.FromResult(fileName);
         }

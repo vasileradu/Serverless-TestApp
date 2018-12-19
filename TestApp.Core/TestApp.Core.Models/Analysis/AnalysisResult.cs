@@ -50,9 +50,9 @@ namespace TestApp.Core.Models.Analysis
         /// <summary>
         /// Creates a new <see cref="AnalysisResult"/> with the common sequences and their position identical overlaps.
         /// </summary>
-        public AnalysisResult Intersect(AnalysisResult otherResult)
+        public AnalysisResult Intersect(AnalysisResult otherResult, string name, int length)
         {
-            var result = new AnalysisResult();
+            var result = new AnalysisResult(name, length);
 
             foreach (var sequence in this.Sequences)
             {
