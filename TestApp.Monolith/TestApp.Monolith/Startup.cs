@@ -29,8 +29,11 @@ namespace TestApp.Monolith
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            services.AddTransient<IDataRepository>(s =>
-                new LocalFileShareRepository(Path.Combine(this.HostingEnvironment.WebRootPath, "Reports")));
+            services.AddTransient<IDataRepository>(s => new LocalFileShareRepository(
+                Path.Combine(this.Configuration["Storage:Locations:Root"], 
+                    this.Configuration["Storage:Locations:Uploads"]),
+                Path.Combine(this.Configuration["Storage:Locations:Root"],
+                    this.Configuration["Storage:Locations:Reports"])));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
