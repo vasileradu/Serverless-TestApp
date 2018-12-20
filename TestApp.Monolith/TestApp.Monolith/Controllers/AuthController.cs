@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json.Linq;
 using TestApp.Core.Auth.Interfaces;
 
@@ -8,15 +10,21 @@ namespace TestApp.Monolith.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        private bool isValidToken = true;
-
         private readonly IUserRepository _userRepository;
         private readonly ITokenRepository _tokenRepository;
+        private readonly TimeSpan _tokenExpirationInterval;
 
-        public AuthController(IUserRepository userRepository, ITokenRepository tokenRepository)
+        public AuthController(
+            IUserRepository userRepository,
+            ITokenRepository tokenRepository,
+            IConfiguration configuration)
         {
             this._userRepository = userRepository;
             this._tokenRepository = tokenRepository;
+
+            int.TryParse(configuration["Auth:TokenExpirationSeconds"], out int expirationSeconds);
+
+            this._tokenExpirationInterval = new TimeSpan(0, 0, expirationSeconds);
         }
 
         [Route("token/get")]
@@ -46,7 +54,7 @@ namespace TestApp.Monolith.Controllers
 
         [Route("token/validate")]
         [HttpGet]
-        [ProducesResponseType(203)]
+        [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         public IActionResult ValidateToken([FromQuery]string token)
         {
@@ -57,7 +65,15 @@ namespace TestApp.Monolith.Controllers
                 return BadRequest(ModelState);
             }
 
-            return this.Ok(this.isValidToken); // call to repo.
+            var tokenData = this._tokenRepository.GetToken(token);
+
+            if (tokenData == null
+                || DateTime.UtcNow - tokenData.CreatedAtUtc > this._tokenExpirationInterval)
+            {
+                return this.Unauthorized();
+            }
+
+            return this.Ok(tokenData);
         }
     }
 }
