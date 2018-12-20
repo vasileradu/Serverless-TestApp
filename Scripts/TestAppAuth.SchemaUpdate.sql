@@ -29,7 +29,7 @@ IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[To
 BEGIN
 CREATE TABLE [dbo].[Token](
 	[Id] [uniqueidentifier] NOT NULL,
-	[CreatedAt] [datetime] NOT NULL,
+	[CreatedAtUtc] [datetime] NOT NULL,
 	[Username] [nvarchar](256) NOT NULL,
  CONSTRAINT [PK_Token] PRIMARY KEY CLUSTERED 
 (
@@ -45,8 +45,8 @@ ALTER TABLE [dbo].[Token] ADD  CONSTRAINT [DF_Token_Id]  DEFAULT (newid()) FOR [
 END
 GO
 
-IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[DF_Token_CreatedAt]') AND type = 'D')
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[DF_Token_CreatedAtUtc]') AND type = 'D')
 BEGIN
-ALTER TABLE [dbo].[Token] ADD  CONSTRAINT [DF_Token_CreatedAt]  DEFAULT (getutcdate()) FOR [CreatedAt]
+ALTER TABLE [dbo].[Token] ADD  CONSTRAINT [DF_Token_CreatedAtUtc]  DEFAULT (getutcdate()) FOR [CreatedAtUtc]
 END
 GO

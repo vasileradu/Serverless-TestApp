@@ -1,6 +1,4 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace TestApp.Core.Auth.Models
 {
@@ -24,7 +22,7 @@ namespace TestApp.Core.Auth.Models
             {
                 entity.Property(e => e.Id).HasDefaultValueSql("(newid())");
 
-                entity.Property(e => e.CreatedAt)
+                entity.Property(e => e.CreatedAtUtc)
                     .HasColumnType("datetime")
                     .HasDefaultValueSql("(getutcdate())");
 

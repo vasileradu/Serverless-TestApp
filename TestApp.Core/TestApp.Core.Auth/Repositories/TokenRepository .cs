@@ -16,19 +16,19 @@ namespace TestApp.Core.Auth.Repositories
 
         #region ITokenRepository
 
-        public string Generate(string username)
+        public Token Generate(string username)
         {
             var token = new Token { Username = username };
 
             this._dbContext.Token.Add(token);
             this._dbContext.SaveChanges();
 
-            return token.Id.ToString();
+            return token;
         }
 
-        public Token GetToken(string token)
+        public Token GetToken(string tokenId)
         {
-            return this._dbContext.Token.FirstOrDefault(t => t.Id.ToString().Equals(token));
+            return this._dbContext.Token.FirstOrDefault(t => t.Id.ToString().Equals(tokenId));
         }
 
         #endregion
