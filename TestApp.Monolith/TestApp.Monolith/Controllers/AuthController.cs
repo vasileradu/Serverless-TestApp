@@ -11,10 +11,12 @@ namespace TestApp.Monolith.Controllers
         private bool isValidToken = true;
 
         private readonly IUserRepository _userRepository;
+        private readonly ITokenRepository _tokenRepository;
 
-        public AuthController(IUserRepository userRepository)
+        public AuthController(IUserRepository userRepository, ITokenRepository tokenRepository)
         {
             this._userRepository = userRepository;
+            this._tokenRepository = tokenRepository;
         }
 
         [Route("token/get")]
@@ -38,8 +40,8 @@ namespace TestApp.Monolith.Controllers
             {
                 return this.Unauthorized();
             }
-            
-            return this.Ok("token");
+
+            return this.Ok(this._tokenRepository.Generate(username));
         }
 
         [Route("token/validate")]
