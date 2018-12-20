@@ -45,6 +45,7 @@ namespace TestApp.Monolith
             });
 
             services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<ITokenRepository, TokenRepository>();
 
             services.AddDbContext<TestAppAuthContext>(options =>
                 options.UseSqlServer(this.Configuration["ConnectionStrings:AuthDb"]));
