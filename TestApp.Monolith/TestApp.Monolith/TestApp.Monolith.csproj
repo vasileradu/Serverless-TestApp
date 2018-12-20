@@ -11,10 +11,15 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.1.4">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.1" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\TestApp.Core\TestApp.Core.Auth\TestApp.Core.Auth.csproj" />
     <ProjectReference Include="..\..\TestApp.Core\TestApp.Core.FileStorage\TestApp.Core.FileStorage.csproj" />
   </ItemGroup>
 

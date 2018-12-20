@@ -6,8 +6,12 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using TestApp.Core.Auth.Interfaces;
+using TestApp.Core.Auth.Models;
+using TestApp.Core.Auth.Repositories;
 using TestApp.Core.FileStorage.Interfaces;
 using TestApp.Core.FileStorage.Repositories;
 
@@ -39,6 +43,11 @@ namespace TestApp.Monolith
             {
                 options.MultipartBodyLengthLimit = this.GetConfigToInt("Upload:SizeLimitBytes");
             });
+
+            services.AddTransient<IUserRepository, UserRepository>();
+
+            services.AddDbContext<TestAppAuthContext>(options =>
+                options.UseSqlServer(this.Configuration["ConnectionStrings:AuthDb"]));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

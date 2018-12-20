@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
+using TestApp.Core.Auth.Interfaces;
 
 namespace TestApp.Monolith.Controllers
 {
@@ -7,8 +8,14 @@ namespace TestApp.Monolith.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        private bool isAuthenticated = true;
         private bool isValidToken = true;
+
+        private readonly IUserRepository _userRepository;
+
+        public AuthController(IUserRepository userRepository)
+        {
+            this._userRepository = userRepository;
+        }
 
         [Route("token/get")]
         [HttpPost]
@@ -27,11 +34,11 @@ namespace TestApp.Monolith.Controllers
                 return this.BadRequest(ModelState);
             }
 
-            if (!this.isAuthenticated)
+            if (!this._userRepository.ValidateCredentials(username, password).Result)
             {
                 return this.Unauthorized();
             }
-
+            
             return this.Ok("token");
         }
 
