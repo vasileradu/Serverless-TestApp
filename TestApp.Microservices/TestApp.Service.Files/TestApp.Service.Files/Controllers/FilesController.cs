@@ -1,10 +1,8 @@
-﻿using System;
-using System.Net.Http;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TestApp.Core.FileStorage.Interfaces;
 
-namespace TestApp.Monolith.Controllers
+namespace TestApp.Service.Files.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
