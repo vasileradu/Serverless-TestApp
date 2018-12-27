@@ -31,13 +31,22 @@ namespace TestApp.Core.Auth.Repositories
             return this._dbContext.Token.FirstOrDefault(t => t.Id.ToString().Equals(tokenId));
         }
 
+        public void Remove(string tokenId)
+        {
+            var token = this.GetToken(tokenId);
+
+            if (token != null)
+            {
+                this._dbContext.Token.Remove(token);
+                this._dbContext.SaveChanges();
+            }
+        }
+
         #endregion
 
         public void Dispose()
         {
             this._dbContext?.Dispose();
         }
-
-
     }
 }
