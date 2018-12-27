@@ -79,7 +79,7 @@
     </TestPlan>
     <hashTree>
       <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Scenario1" enabled="true">
-        <stringProp name="TestPlan.comments">Login - Upload - Analysis - ViewResults</stringProp>
+        <stringProp name="TestPlan.comments">Login - Upload - Analysis - ViewResults - Logout</stringProp>
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
@@ -313,7 +313,7 @@
         <hashTree/>
       </hashTree>
       <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Scenario2" enabled="true">
-        <stringProp name="TestPlan.comments">Login - Upload - Analysis - Compare</stringProp>
+        <stringProp name="TestPlan.comments">Login - Upload - Analysis - Compare - Logout</stringProp>
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
@@ -560,7 +560,7 @@
         <hashTree/>
       </hashTree>
       <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Scenario3" enabled="true">
-        <stringProp name="TestPlan.comments">Login - Upload - Compare - ViewResults</stringProp>
+        <stringProp name="TestPlan.comments">Login - Upload - Compare - ViewResults - Logout</stringProp>
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
@@ -814,7 +814,7 @@
         <hashTree/>
       </hashTree>
       <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Scenario4" enabled="true">
-        <stringProp name="TestPlan.comments">Login - ViewResults</stringProp>
+        <stringProp name="TestPlan.comments">Login - ViewResults - Logout</stringProp>
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
