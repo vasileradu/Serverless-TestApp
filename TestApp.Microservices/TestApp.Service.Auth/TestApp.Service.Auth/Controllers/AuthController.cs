@@ -75,5 +75,32 @@ namespace TestApp.Service.Auth.Controllers
 
             return this.Ok(tokenData);
         }
+
+        [Route("token/remove")]
+        [HttpPost]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        public IActionResult RemoveToken([FromQuery] string token)
+        {
+            if (string.IsNullOrWhiteSpace(token))
+            {
+                ModelState.AddModelError("token", "Missing token");
+
+                return BadRequest(ModelState);
+            }
+
+            var tokenData = this._tokenRepository.GetToken(token);
+
+            if (tokenData == null)
+            {
+                ModelState.AddModelError("token", "Invalid token");
+
+                return BadRequest(ModelState);
+            }
+
+            this._tokenRepository.Remove(token);
+
+            return this.NoContent();
+        }
     }
 }

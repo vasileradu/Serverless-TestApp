@@ -6,5 +6,6 @@ namespace TestApp.Core.Auth.Interfaces
     {
         Token Generate(string username);
         Token GetToken(string tokenId);
+        void Remove(string tokenId);
     }
 }

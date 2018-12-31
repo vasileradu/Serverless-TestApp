@@ -1,0 +1,2 @@
+host|analysis_prefix|auth_prefix|reports_prefix|files_prefix
+localhost/testapp.service|.analysis|.auth|.reports|.files
