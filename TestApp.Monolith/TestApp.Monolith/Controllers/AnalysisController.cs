@@ -34,7 +34,7 @@ namespace TestApp.Monolith.Controllers
 
             var result = await this._fileRepository.SaveAnalysisResult(analysis, name);
 
-            return this.Ok(result);
+            return this.Ok(new { filename = result });
         }
 
         [Route("compare")]
@@ -73,7 +73,7 @@ namespace TestApp.Monolith.Controllers
                 tasks.Aggregate(seed, (accumulator, t) => accumulator.Intersect(t.Result, name, length)),
                 name);
 
-            return this.Ok(result);
+            return this.Ok(new { filename = result });
         }
 
         #region Private Methods
