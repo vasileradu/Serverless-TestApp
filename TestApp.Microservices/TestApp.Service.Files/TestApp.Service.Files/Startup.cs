@@ -25,13 +25,30 @@ namespace TestApp.Service.Files
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            this.ConfigureCommonServices(services);
+
+            services.AddTransient<IDataRepository>(s =>
+                new AzureFileShareRepository(
+                    this.Configuration["Storage:Locations:ConnectionString"],
+                    this.Configuration["Storage:Locations:Root"],
+                    this.Configuration["Storage:Locations:Uploads"],
+                    this.Configuration["Storage:Locations:Reports"]));
+        }
+
+        public void ConfigureDevelopmentServices(IServiceCollection services)
+        {
+            this.ConfigureCommonServices(services);
 
             services.AddTransient<IDataRepository>(s => new LocalFileShareRepository(
                 Path.Combine(this.Configuration["Storage:Locations:Root"],
                     this.Configuration["Storage:Locations:Uploads"]),
                 Path.Combine(this.Configuration["Storage:Locations:Root"],
                     this.Configuration["Storage:Locations:Reports"])));
+        }
+
+        public void ConfigureCommonServices(IServiceCollection services)
+        {
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             services.Configure<FormOptions>(options =>
             {
