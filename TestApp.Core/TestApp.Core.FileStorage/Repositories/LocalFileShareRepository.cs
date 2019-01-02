@@ -21,6 +21,8 @@ namespace TestApp.Core.FileStorage.Repositories
             this._reportsPath = reportsPath;
         }
 
+        #region IDataRepository Members
+
         public Task<AnalysisResult> GetAnalysisResult(string name)
         {
             var result = new AnalysisResult();
@@ -47,9 +49,7 @@ namespace TestApp.Core.FileStorage.Repositories
         {
             var fileName = $"analysis_{name}_{Guid.NewGuid()}.json";
 
-            var content = JsonConvert.SerializeObject(result);
-
-            Task.WaitAll(File.WriteAllTextAsync(Path.Combine(this._reportsPath, fileName), content));
+            Task.WaitAll(this.SaveResult(result, fileName));
 
             return Task.FromResult(fileName);
         }
@@ -58,9 +58,7 @@ namespace TestApp.Core.FileStorage.Repositories
         {
             var fileName = $"comparison_{name}_{Guid.NewGuid()}.json";
 
-            var content = JsonConvert.SerializeObject(result);
-
-            Task.WaitAll(File.WriteAllTextAsync(Path.Combine(this._reportsPath, fileName), content));
+            Task.WaitAll(this.SaveResult(result, fileName));
 
             return Task.FromResult(fileName);
         }
@@ -69,7 +67,7 @@ namespace TestApp.Core.FileStorage.Repositories
         {
             string path = Path.Combine(this._uploadsPath, $"upload_{Guid.NewGuid()}_{name}");
 
-            using(stream)
+            using (stream)
             using (var output = File.Open(path, FileMode.Create))
             {
                 Task.WaitAll(stream.CopyToAsync(output));
@@ -77,5 +75,18 @@ namespace TestApp.Core.FileStorage.Repositories
 
             return true;
         }
+
+        #endregion
+
+        #region Private Methods
+
+        private Task SaveResult(AnalysisResult result, string fileName)
+        {
+            var content = JsonConvert.SerializeObject(result);
+
+            return File.WriteAllTextAsync(Path.Combine(this._reportsPath, fileName), content);
+        }
+
+        #endregion
     }
 }
