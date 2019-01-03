@@ -63,23 +63,15 @@ namespace TestApp.Core.FileStorage.Repositories
 
         public Task<string> SaveAnalysisResult(AnalysisResult result, string name)
         {
-            var fileName = $"analysis_{name}_{Guid.NewGuid()}.json";
-
-            Task.WaitAll(this.SaveResult(result, fileName));
-
-            return Task.FromResult(fileName);
+            return this.SaveResult(result, $"analysis_{name}_{Guid.NewGuid()}.json");
         }
 
         public Task<string> SaveComparisonResult(AnalysisResult result, string name)
         {
-            var fileName = $"comparison_{name}_{Guid.NewGuid()}.json";
-
-            Task.WaitAll(this.SaveResult(result, fileName));
-
-            return Task.FromResult(fileName);
+            return this.SaveResult(result, $"comparison_{name}_{Guid.NewGuid()}.json");
         }
 
-        public bool SaveFile(string name, Stream stream)
+        public Task<string> SaveFile(string name, Stream stream)
         {
             var cloudFile = this._uploads.GetFileReference($"upload_{Guid.NewGuid()}_{name}");
 
@@ -88,22 +80,24 @@ namespace TestApp.Core.FileStorage.Repositories
                 Task.WaitAll(cloudFile.UploadFromStreamAsync(stream));
             }
 
-            return true;
+            return Task.FromResult(cloudFile.Name);
         }
-        
+
         #endregion
 
         #region Private Members
 
-        private Task SaveResult(AnalysisResult result, string fileName)
+        private Task<string> SaveResult(AnalysisResult result, string fileName)
         {
             var content = JsonConvert.SerializeObject(result);
 
             var cloudFile = this._reports.GetFileReference(fileName);
 
-            return cloudFile.UploadTextAsync(content);
+            Task.WaitAll(cloudFile.UploadTextAsync(content));
+
+            return Task.FromResult(fileName);
         }
-        
+
         #endregion
     }
 }
