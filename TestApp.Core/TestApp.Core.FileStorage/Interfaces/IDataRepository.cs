@@ -14,6 +14,6 @@ namespace TestApp.Core.FileStorage.Interfaces
 
         Task<string> SaveComparisonResult(AnalysisResult result, string name);
 
-        bool SaveFile(string name, Stream stream);
+        Task<string> SaveFile(string name, Stream stream);
     }
 }
