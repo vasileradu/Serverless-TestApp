@@ -1,0 +1,2 @@
+Get-ChildItem "${storage}" -Recurse | Where-Object {$_.Name -eq '${uploadFilename}' -or $_.Name -eq '${resultsFilename}' } | Remove-Item
+Get-ChildItem "${storage}" -Recurse | Where-Object {$_.Name -eq '${resultsFilename}' } | Remove-Item
