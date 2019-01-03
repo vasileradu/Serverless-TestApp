@@ -1,2 +1,2 @@
-host|analysis_prefix|auth_prefix|reports_prefix|files_prefix
-localhost/testapp.monolith||||
+host|analysis_prefix|auth_prefix|reports_prefix|files_prefix|storage
+localhost/testapp.monolith|||||C:\Projects\Serverless-TestApp\Storage
