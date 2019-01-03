@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 using TestApp.Core.FileStorage.Interfaces;
 
 namespace TestApp.Service.Files.Controllers
@@ -19,9 +20,11 @@ namespace TestApp.Service.Files.Controllers
         [HttpPost]
         [ProducesResponseType(200)]
         [Consumes("multipart/form-data")]
-        public IActionResult Upload(IFormFile file)
+        public async Task<IActionResult> Upload(IFormFile file)
         {
-            return this.Ok(this._fileRepository.SaveFile(file.FileName, file.OpenReadStream()));
+            var result = await this._fileRepository.SaveFile(file.FileName, file.OpenReadStream());
+
+            return this.Ok(new { filename = result });
         }
     }
 }

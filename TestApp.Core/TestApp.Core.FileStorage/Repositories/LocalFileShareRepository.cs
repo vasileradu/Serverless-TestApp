@@ -47,25 +47,18 @@ namespace TestApp.Core.FileStorage.Repositories
 
         public Task<string> SaveAnalysisResult(AnalysisResult result, string name)
         {
-            var fileName = $"analysis_{name}_{Guid.NewGuid()}.json";
-
-            Task.WaitAll(this.SaveResult(result, fileName));
-
-            return Task.FromResult(fileName);
+            return this.SaveResult(result, $"analysis_{name}_{Guid.NewGuid()}.json");
         }
 
         public Task<string> SaveComparisonResult(AnalysisResult result, string name)
         {
-            var fileName = $"comparison_{name}_{Guid.NewGuid()}.json";
-
-            Task.WaitAll(this.SaveResult(result, fileName));
-
-            return Task.FromResult(fileName);
+            return this.SaveResult(result, $"comparison_{name}_{Guid.NewGuid()}.json");
         }
 
-        public bool SaveFile(string name, Stream stream)
+        public Task<string> SaveFile(string name, Stream stream)
         {
-            string path = Path.Combine(this._uploadsPath, $"upload_{Guid.NewGuid()}_{name}");
+            string fileName = $"upload_{Guid.NewGuid()}_{name}";
+            string path = Path.Combine(this._uploadsPath, fileName);
 
             using (stream)
             using (var output = File.Open(path, FileMode.Create))
@@ -73,18 +66,20 @@ namespace TestApp.Core.FileStorage.Repositories
                 Task.WaitAll(stream.CopyToAsync(output));
             }
 
-            return true;
+            return Task.FromResult(fileName);
         }
 
         #endregion
 
         #region Private Methods
 
-        private Task SaveResult(AnalysisResult result, string fileName)
+        private Task<string> SaveResult(AnalysisResult result, string fileName)
         {
             var content = JsonConvert.SerializeObject(result);
 
-            return File.WriteAllTextAsync(Path.Combine(this._reportsPath, fileName), content);
+            Task.WaitAll(File.WriteAllTextAsync(Path.Combine(this._reportsPath, fileName), content));
+
+            return Task.FromResult(fileName);
         }
 
         #endregion
