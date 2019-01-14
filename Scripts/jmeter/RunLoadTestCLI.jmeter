@@ -1,0 +1,1 @@
+.\jmeter -n -t C:\Projects\Serverless-TestApp\Evaluation\TestPlans\TestApp.TestCLI.jmx -l resultsCLI.jtl -JConfigFile=TestApp.Config.local.monolith -JResultsFile=monolith
