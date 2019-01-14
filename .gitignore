@@ -5,6 +5,7 @@
 
 # User-specific folders
 SecretConfig/
+Evaluation/Results
 
 # User-specific files
 *.rsuser
