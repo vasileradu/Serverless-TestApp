@@ -17,8 +17,22 @@ namespace TestApp.Service.Auth
             CreateWebHostBuilder(args).Build().Run();
         }
 
-        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>();
+        public static IWebHostBuilder CreateWebHostBuilder(string[] args)
+        {
+            var config = new ConfigurationBuilder()
+                .AddCommandLine(args)
+                .Build();
+
+            var hostUrl = config["hosturl"];
+
+            var builder = WebHost.CreateDefaultBuilder(args);
+
+            if (!string.IsNullOrEmpty(hostUrl))
+            {
+                builder = builder.UseUrls(hostUrl);
+            }
+
+            return builder.UseStartup<Startup>();
+        }
     }
 }
