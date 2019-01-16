@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore;
+﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
+using TestApp.Core.Common.Extensions;
 
 namespace TestApp.Service.Auth
 {
@@ -18,21 +12,6 @@ namespace TestApp.Service.Auth
         }
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args)
-        {
-            var config = new ConfigurationBuilder()
-                .AddCommandLine(args)
-                .Build();
-
-            var hostUrl = config["hosturl"];
-
-            var builder = WebHost.CreateDefaultBuilder(args);
-
-            if (!string.IsNullOrEmpty(hostUrl))
-            {
-                builder = builder.UseUrls(hostUrl);
-            }
-
-            return builder.UseStartup<Startup>();
-        }
+            => WebHost.CreateDefaultBuilder(args).UseCliUrls(args).UseStartup<Startup>();
     }
 }
