@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using TestApp.Core.Auth.Interfaces;
 using TestApp.Core.Auth.Models;
 using TestApp.Core.Auth.Repositories;
+using TestApp.Core.Common.Extensions;
 using TestApp.Core.FileStorage.Interfaces;
 using TestApp.Core.FileStorage.Repositories;
 
@@ -58,7 +59,7 @@ namespace TestApp.Monolith
 
             services.Configure<FormOptions>(options =>
             {
-                options.MultipartBodyLengthLimit = this.GetConfigToInt("Upload:SizeLimitBytes");
+                options.MultipartBodyLengthLimit = this.Configuration.GetIntConfig("Upload:SizeLimitBytes");
             });
 
             services.AddTransient<IUserRepository, UserRepository>();
@@ -76,38 +77,7 @@ namespace TestApp.Monolith
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseExceptionHandler(appError =>
-            {
-                appError.Run(async context =>
-                {
-                    context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-                    context.Response.ContentType = "application/json";
-
-                    var contextFeature = context.Features.Get<IExceptionHandlerFeature>();
-                    if (contextFeature != null)
-                    {
-                        await context.Response.WriteAsync(new
-                        {
-                            context.Response.StatusCode,
-                            Message = "Internal Server Error.",
-                            StackTrace = contextFeature.Error.ToString()
-                        }.ToString());
-                    }
-
-                });
-            });
-
-            app.UseMvc();
-        }
-
-        private int GetConfigToInt(string key, int defaultValue = 0)
-        {
-            if (!int.TryParse(this.Configuration[key], out int result))
-            {
-                result = defaultValue;
-            }
-
-            return result;
+            app.UseGlobalExceptionHandler().UseMvc();
         }
     }
 }

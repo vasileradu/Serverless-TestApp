@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestApp.Core.FileStorage", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestApp.Core.Models", "..\TestApp.Core\TestApp.Core.Models\TestApp.Core.Models.csproj", "{484EF851-52E7-4A4C-931F-AF140A1BC9CC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestApp.Core.Auth", "..\TestApp.Core\TestApp.Core.Auth\TestApp.Core.Auth.csproj", "{E2E8E957-8F84-4346-92D5-8BF6E229D669}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestApp.Core.Auth", "..\TestApp.Core\TestApp.Core.Auth\TestApp.Core.Auth.csproj", "{E2E8E957-8F84-4346-92D5-8BF6E229D669}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestApp.Core.Common", "..\TestApp.Core\TestApp.Core.Common\TestApp.Core.Common.csproj", "{2C6E9179-9781-498E-9649-397AE80922A5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{E2E8E957-8F84-4346-92D5-8BF6E229D669}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E2E8E957-8F84-4346-92D5-8BF6E229D669}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E2E8E957-8F84-4346-92D5-8BF6E229D669}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C6E9179-9781-498E-9649-397AE80922A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C6E9179-9781-498E-9649-397AE80922A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C6E9179-9781-498E-9649-397AE80922A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C6E9179-9781-498E-9649-397AE80922A5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

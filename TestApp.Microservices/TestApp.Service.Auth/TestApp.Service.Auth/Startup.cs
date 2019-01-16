@@ -10,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using TestApp.Core.Auth.Interfaces;
 using TestApp.Core.Auth.Models;
 using TestApp.Core.Auth.Repositories;
+using TestApp.Core.Common.Extensions;
 
 namespace TestApp.Service.Auth
 {
@@ -42,28 +43,7 @@ namespace TestApp.Service.Auth
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseExceptionHandler(appError =>
-            {
-                appError.Run(async context =>
-                {
-                    context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-                    context.Response.ContentType = "application/json";
-
-                    var contextFeature = context.Features.Get<IExceptionHandlerFeature>();
-                    if (contextFeature != null)
-                    {
-                        await context.Response.WriteAsync(new
-                        {
-                            context.Response.StatusCode,
-                            Message = "Internal Server Error.",
-                            StackTrace = contextFeature.Error.ToString()
-                        }.ToString());
-                    }
-
-                });
-            });
-
-            app.UseMvc();
+            app.UseGlobalExceptionHandler().UseMvc();
         }
     }
 }

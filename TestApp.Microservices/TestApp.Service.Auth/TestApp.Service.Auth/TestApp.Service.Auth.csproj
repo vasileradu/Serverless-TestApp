@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\TestApp.Core\TestApp.Core.Auth\TestApp.Core.Auth.csproj" />
+    <ProjectReference Include="..\..\..\TestApp.Core\TestApp.Core.Common\TestApp.Core.Common.csproj" />
   </ItemGroup>
 
 </Project>

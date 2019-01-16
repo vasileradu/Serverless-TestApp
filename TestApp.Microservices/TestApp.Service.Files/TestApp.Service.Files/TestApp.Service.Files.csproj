@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\TestApp.Core\TestApp.Core.Common\TestApp.Core.Common.csproj" />
     <ProjectReference Include="..\..\..\TestApp.Core\TestApp.Core.FileStorage\TestApp.Core.FileStorage.csproj" />
   </ItemGroup>
 
