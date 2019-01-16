@@ -3,11 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.168
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestApp.Service.Reports", "TestApp.Service.Reports\TestApp.Service.Reports.csproj", "{C97AD016-7FEB-47E8-B8A8-76FEC48F71DE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestApp.Service.Reports", "TestApp.Service.Reports\TestApp.Service.Reports.csproj", "{C97AD016-7FEB-47E8-B8A8-76FEC48F71DE}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestApp.Core.FileStorage", "..\..\TestApp.Core\TestApp.Core.FileStorage\TestApp.Core.FileStorage.csproj", "{41AC34F4-F932-431C-ADBC-F76D3E8671EF}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestApp.Core.Models", "..\..\TestApp.Core\TestApp.Core.Models\TestApp.Core.Models.csproj", "{D1A7B623-92F0-4780-99FD-42F5E0508957}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestApp.Core.Common", "..\..\TestApp.Core\TestApp.Core.Common\TestApp.Core.Common.csproj", "{FF6501BB-F5DE-4C53-A544-D5B9089C74CE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{D1A7B623-92F0-4780-99FD-42F5E0508957}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D1A7B623-92F0-4780-99FD-42F5E0508957}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D1A7B623-92F0-4780-99FD-42F5E0508957}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FF6501BB-F5DE-4C53-A544-D5B9089C74CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF6501BB-F5DE-4C53-A544-D5B9089C74CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF6501BB-F5DE-4C53-A544-D5B9089C74CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF6501BB-F5DE-4C53-A544-D5B9089C74CE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

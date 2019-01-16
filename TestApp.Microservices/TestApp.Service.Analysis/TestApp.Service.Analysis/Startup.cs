@@ -1,12 +1,10 @@
 ﻿using System.IO;
-using System.Net;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using TestApp.Core.Common.Extensions;
 using TestApp.Core.FileStorage.Interfaces;
 using TestApp.Core.FileStorage.Repositories;
 
@@ -58,28 +56,7 @@ namespace TestApp.Service.Analysis
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseExceptionHandler(appError =>
-            {
-                appError.Run(async context =>
-                {
-                    context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-                    context.Response.ContentType = "application/json";
-
-                    var contextFeature = context.Features.Get<IExceptionHandlerFeature>();
-                    if (contextFeature != null)
-                    {
-                        await context.Response.WriteAsync(new
-                        {
-                            context.Response.StatusCode,
-                            Message = "Internal Server Error.",
-                            StackTrace = contextFeature.Error.ToString()
-                        }.ToString());
-                    }
-
-                });
-            });
-
-            app.UseMvc();
+            app.UseGlobalExceptionHandler().UseMvc();
         }
     }
 }
