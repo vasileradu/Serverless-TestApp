@@ -6,6 +6,7 @@
 # User-specific folders
 SecretConfig/
 Evaluation/Results
+builds/
 
 # User-specific files
 *.rsuser
