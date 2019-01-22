@@ -1,0 +1,4 @@
+{
+	"fileUris": ["https://testappcloudstorage.blob.core.windows.net/scripts/DeployToAppVm.ps1"],
+	"commandToExecute": "powershell.exe -ExecutionPolicy Unrestricted -file ./DeployToAppVm.ps1 -app \"service.reports\""
+}
