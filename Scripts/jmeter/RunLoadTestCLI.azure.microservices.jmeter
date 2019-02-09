@@ -1,1 +1,1 @@
-.\jmeter -n -t C:\jmeter\TestPlans\TestApp.TestCLI.jmx -l "C:\jmeter\jmeter.phase1.azure.microservices.logs" -JConfigFile="TestApp.Config.azure.microservices" -JResultsFile="C:\jmeter\jmeter.phase1.azure.microservices.results"
+.\jmeter -n -t C:\jmeter\TestPlans\TestApp.TestCLI.jmx -l "C:\jmeter\jmeter.phase1.azure.microservices.logs" -JConfigFile="TestApp.Config.azure.microservices" -JResultsFile="C:\jmeter\jmeter.phase1.azure.vm.microservice.results"
