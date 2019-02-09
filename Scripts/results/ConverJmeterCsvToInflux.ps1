@@ -7,6 +7,20 @@ param (
 	
 )
 
+function Rename-JmeterHeader($header) {
+	
+	$renames = @{
+		success='errorCount';
+		elapsed='responseTime';
+		label='requestName'}
+		
+	foreach ($item in $renames.GetEnumerator()) {
+		$header = $header.Replace($($item.Name), $($item.Value))
+	}
+	
+	return $header;	
+}
+
 # Copies column-header-name onto each row, before the corresponding:
 # note: assumes timestamp is last column
 #metricName,col1-name=row1-val-name,col2-name=row1-val-name timestamp
@@ -14,8 +28,12 @@ param (
 
 $delimiter = ",";
 $timestampIndex = 0;
+$httpCodeIndex = 3;
 $scenarioIndex = 4;
+$success = 5;	
 $headers = (Get-Content -Path $inputFile -TotalCount 1).Split($delimiter);
+$headers = Rename-JmeterHeader($headers)
+$filterTagsIndexes = @(2);
 
 $lines = 0;
 
@@ -26,33 +44,72 @@ Add-Content $output ""
 
 Get-Content $inputFile | Select-Object -Skip 1 | ForEach-Object {
     
-	$values = $_.Split($delimiter)
-	$newRow = "$metricName," + $tags;
-	$lastValue = ""
-		
-	for ($index = 0; $index -lt $values.count; $index++) {
-		
-		if($index -eq $timestampIndex) {
-			$lastValue = $values[$index] + "000000000";
-			continue # go to next line;
+		if($_ -match 'Cleanup Storage Windows') {
+			return
 		}
 		
-		$key=$headers[$index];
-		$value=$values[$index];
+		$values = $_.Split($delimiter)		
+		$lastValue = ""
 		
-		if($index -eq $scenarioIndex) {
-			## cleanup, remove everything after space;
-			$value = $value.Split(" ")[0] 
+		$starTags = ""; # filtreable
+		$endTags = ""; # non-filtreable
+				
+		for ($index = 0; $index -lt $values.count; $index++) {
+			
+			if($index -eq $timestampIndex) {
+				## convert timestamp from ms to ns
+				$lastValue = $values[$index] + "000000";
+				continue ## go to next line;
+			}
+			
+			$key=$headers[$index];
+			$value=$values[$index];
+			
+			# special parsing
+			switch ($index) {				
+				$httpCodeIndex {
+					if($value.length -gt 3) {
+						$value = 444 # no code was sent out;
+					}
+				}
+				$scenarioIndex {
+					## cleanup, remove everything after space;
+					$value = $value.Split(" ")[0] 
+				}
+				$success {
+					# key should be 'errorCount'
+					if($value -eq "true") {
+						$value = 0
+					} else {
+						$value = 1
+					}					
+				}
+			}
+			
+			
+			
+			if(-not($value -match '^\d+$')) {
+				# not a number
+				$value = """" + $value + """"
+				$value = $value.Replace(" ", "_")
+			}			
+			
+			if($filterTagsIndexes.Contains($index)) {
+				$starTags += $delimiter + $key + "=" + $value
+			} else {
+				$endTags += $key + "=" + $value
+				# do not add delimiter after last value.
+				if($index -lt $values.count - 1) {
+					$endTags += $delimiter
+				}
+			}			
 		}
+		
+		$newRow = "$metricName," + $tags + $starTags + " " + $endTags + " " + $lastValue;
+		$lines++;
+		
+		return "$newRow`n"
 	
-		$newRow += $delimiter + $key + "=" + $value;
-	}
-	
-	$newRow += " " + $lastValue;
-	$lines++;
-	
-	return $newRow
-	
-} | Add-Content($output)
+} | Add-Content -Path $output -NoNewline -Encoding "ascii"
 
 Write-Host "$lines lines written to $output" -ForegroundColor Yellow

@@ -19,18 +19,18 @@ Add-Content $output ""
 Get-Content $inputFile | ForEach-Object {
     
 	$values = $_.Split($delimiter);
-	$firstValue=$values[0];
-	$newRow = $firstValue + $delimiter + $tags;
+		$metricName=$values[0];
+		$newRow = $metricName + $delimiter + $tags;
+			
+		for ($index = 1; $index -lt $values.count; $index++) {
 		
-	for ($index = 1; $index -lt $values.count; $index++) {
+			$newRow += $delimiter + $values[$index];
+		}
+		
+		$lines++;
+		
+		return "$newRow`n"
 	
-		$newRow += $delimiter + $values[$index];
-	}
-	
-	$lines++;
-	
-	return $newRow
-	
-} | Add-Content($output)
+} | Add-Content -Path $output -NoNewline -Encoding "ascii"
 
 Write-Host "$lines lines written to $output" -ForegroundColor Yellow
