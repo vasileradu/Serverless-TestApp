@@ -1,5 +1,4 @@
 param (
-    [Parameter(Mandatory=$true)][string]$dbName,
     [Parameter(Mandatory=$true)][string]$path,
 	[Parameter(Mandatory=$true)][string]$output
 )
@@ -142,14 +141,6 @@ $phase = $path.Split("\")[-1];
 $lines = 0;
 
 New-Item -ItemType File -Force -Path $output
-
-#Add-Content $output "# DDL"
-#Add-Content $output "CREATE DATABASE $dbName"
-#Add-Content $output ""
-#Add-Content $output "# DML"
-#Add-Content $output "CONTEXT-DATABASE: $dbName"
-#Add-Content $output ""
-
 
 Get-ChildItem $path | Where-Object {($_.Name.StartsWith("jmeter") -and ($_.Extension -eq ".results"))} | ForEach-Object {
 	# detect tags
