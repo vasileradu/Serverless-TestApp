@@ -1,1 +1,1 @@
-.\jmeter -n -t C:\jmeter\TestPlans\TestApp.TestCLI.jmx -l "C:\jmeter\jmeter.phase1.azure.monolith.logs" -JConfigFile="TestApp.Config.azure.monolith" -JResultsFile="C:\jmeter\jmeter.phase1.azure.vm.monolith.results"
+.\jmeter -n -t C:\jmeter\TestPlans\TestApp.TestCLI.FixedDuration.jmx -l "Y:\Results\jmeter.azure.monolith.logs" -JConfigFile="TestApp.Config.azure.monolith" -JResultsFile="Y:\Results\jmeter.azure.vm.monolith.results"
