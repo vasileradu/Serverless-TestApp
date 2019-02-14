@@ -53,6 +53,7 @@ Get-Content $inputFile | Select-Object -Skip 1 | ForEach-Object {
 		
 		$starTags = ""; # filtreable
 		$endTags = ""; # non-filtreable
+		$usersPerScenario = @{};
 				
 		for ($index = 0; $index -lt $values.count; $index++) {
 			
@@ -73,8 +74,21 @@ Get-Content $inputFile | Select-Object -Skip 1 | ForEach-Object {
 					}
 				}
 				$scenarioIndex {
-					## cleanup, remove everything after space;
-					$value = $value.Split(" ")[0] 
+					## extract scenario name and threads;
+					$scenarioValues = $value.Split(" ");
+					$value = $scenarioValues[0] # scenario name will be added later;
+					
+					# number of threards (users) added now;
+					$threads = $scenarioValues[1].Split("-")[1];
+					$allThreads = 0;
+					
+					$usersPerScenario.Set_Item($value, [int]$threads)
+										
+					foreach ($users in $usersPerScenario.GetEnumerator()) {
+						$allThreads += $($users.Value)
+					}				
+					
+					$endTags += "startedThreads=" + $allThreads + $delimiter
 				}
 				$success {
 					# key should be 'errorCount'
@@ -84,9 +98,7 @@ Get-Content $inputFile | Select-Object -Skip 1 | ForEach-Object {
 						$value = 1
 					}					
 				}
-			}
-			
-			
+			}			
 			
 			if(-not($value -match '^\d+$')) {
 				# not a number
