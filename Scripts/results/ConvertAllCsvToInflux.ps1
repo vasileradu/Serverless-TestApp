@@ -4,7 +4,7 @@ param (
 )
 
 ### helper functions
-function Add-JmeterContent ($metricName, $inputFile, $output, $tags) {
+function Add-JmeterContent ($metricName, $inputFile, $output, $tags, $newStartDateMs) {
 
 
 	# Copies column-header-name onto each row, before the corresponding:
@@ -20,6 +20,7 @@ function Add-JmeterContent ($metricName, $inputFile, $output, $tags) {
 	$headers = (Get-Content -Path $inputFile -TotalCount 1).Split($delimiter);
 	$headers = Rename-JmeterHeader($headers)
 	$filterTagsIndexes = @(2);
+	$additionalMs = [long]0;
 	
 	$lines = 0;
 
@@ -39,8 +40,19 @@ function Add-JmeterContent ($metricName, $inputFile, $output, $tags) {
 		for ($index = 0; $index -lt $values.count; $index++) {
 			
 			if($index -eq $timestampIndex) {
+				
+				$ts = [long]$values[$index];
+				
+				## translate timestamp
+				if($additionalMs -eq 0) {
+					$additionalMs = [long]$newStartDateMs - [long]$ts;
+				}
+				
+				$ts = [long]$ts + [long]$additionalMs;
+				
 				## convert timestamp from ms to ns
-				$lastValue = $values[$index] + "000000";
+				$lastValue = [string]$ts + "000000";							
+				
 				continue ## go to next line;
 			}
 			
@@ -121,17 +133,33 @@ function Rename-JmeterHeader($header) {
 	return $header;	
 }
 
-function Add-TelegrafContent($inputFile, $output, $tags) {
+function Add-TelegrafContent($inputFile, $output, $tags, $newStartDateMs) {
 # Adds new tags right after first comma-separated-value
 	$delimiter = ",";
 	$lines = 0;
+	$additionalMs = [long]0;
 	
 	Get-Content $inputFile | ForEach-Object {
     
 		$values = $_.Split($delimiter);
 		$metricName=$values[0];
 		$newRow = $metricName + $delimiter + $tags;
-			
+		
+		## translate timestamp
+		## timestamp is the very last value, separated by empty space;
+		$lastValues = $values[-1].Split(" "); 
+		$ts = [math]::round([long]$lastValues[-1]/1000000) #convert to milliseconds;
+		
+		if($additionalMs -eq 0) {
+			$additionalMs = [long]$newStartDateMs - [long]$ts;
+		}
+		
+		$ts = [long]$ts + [long]$additionalMs;
+		
+		## convert timestamp from ms to ns
+		$lastValues[-1] = [string]$ts + "000000";		
+		$values[-1] = $lastValues -join ' '
+		
 		for ($index = 1; $index -lt $values.count; $index++) {
 		
 			$newRow += $delimiter + $values[$index];
@@ -149,6 +177,11 @@ function Add-TelegrafContent($inputFile, $output, $tags) {
 
 $phase = $path.Split("\")[-1];
 
+# used for translating dates / timestamps;
+$epoch = Get-Date -Year 1970 -Month 1 -Day 1 -Hour 0 -Minute 0 -Second 0
+$newStartDate = Get-Date -Date "2020-01-01 00:00:01Z"
+$newStartDateMs = [math]::truncate($newStartDate.Subtract($epoch).TotalMilliSeconds)
+
 $lines = 0;
 
 New-Item -ItemType File -Force -Path $output
@@ -160,7 +193,7 @@ Get-ChildItem $path | Where-Object {($_.Name.StartsWith("jmeter") -and ($_.Exten
 	$tags="phase=$phase,environment=$environment,application=$application";
 	
 	# add jmeter content
-	$lines += Add-JmeterContent -metricName "requestsRaw" -inputFile $_.FullName -output $output -tags $tags
+	$lines += Add-JmeterContent -metricName "requestsRaw" -inputFile $_.FullName -output $output -tags $tags -newStartDateMs $newStartDateMs
 	
 }
 
@@ -168,7 +201,7 @@ $tags="phase=$phase";
 
 Get-ChildItem $path | Where-Object {($_.Name.StartsWith("telegraf") -and ($_.Extension -eq ".out"))} | ForEach-Object {
 	# add telegraf content
-	$lines += Add-TelegrafContent -inputFile $_.FullName -output $output -tags $tags
+	$lines += Add-TelegrafContent -inputFile $_.FullName -output $output -tags $tags -newStartDateMs $newStartDateMs
 
 }
 
