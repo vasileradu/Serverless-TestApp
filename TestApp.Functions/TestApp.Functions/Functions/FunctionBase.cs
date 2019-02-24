@@ -15,12 +15,14 @@ namespace TestApp.Functions.Functions
             this.Container = new Startup().Configure().Build();
         }
 
-        protected ActionResult Ok(object obj) => new OkObjectResult(obj);
+        protected ActionResult Ok(object value) => new OkObjectResult(value);
 
-        protected ActionResult BadRequest(object obj) => new BadRequestObjectResult(obj);
+        protected ActionResult BadRequest(object value) => new BadRequestObjectResult(value);
 
         protected ActionResult Unauthorized() => new UnauthorizedResult();
 
         protected ActionResult NoContent() => new NoContentResult();
+
+        protected ActionResult NotFound(object value) => new NotFoundObjectResult(value);
     }
 }
