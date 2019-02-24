@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.329
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestApp.Functions", "TestApp.Functions\TestApp.Functions.csproj", "{40A5B671-6482-44C6-B71B-5064AF205E99}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestApp.Functions", "TestApp.Functions\TestApp.Functions.csproj", "{40A5B671-6482-44C6-B71B-5064AF205E99}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestApp.Core.Auth", "..\TestApp.Core\TestApp.Core.Auth\TestApp.Core.Auth.csproj", "{6DE6AD15-F7E0-489B-973A-744606759AF5}"
 EndProject

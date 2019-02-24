@@ -5,14 +5,14 @@ namespace TestApp.Functions.Functions
 {
     public abstract class FunctionBase
     {
-        protected ModelState ModelState { get; private set; }
+        protected ModelState ModelState { get; }
 
-        protected readonly System.IServiceProvider _container;
+        protected System.IServiceProvider Container { get; }
 
         protected FunctionBase()
         {
             this.ModelState = new ModelState();
-            this._container = new Startup().Configure().Build();
+            this.Container = new Startup().Configure().Build();
         }
 
         protected ActionResult Ok(object obj) => new OkObjectResult(obj);
@@ -20,5 +20,7 @@ namespace TestApp.Functions.Functions
         protected ActionResult BadRequest(object obj) => new BadRequestObjectResult(obj);
 
         protected ActionResult Unauthorized() => new UnauthorizedResult();
+
+        protected ActionResult NoContent() => new NoContentResult();
     }
 }

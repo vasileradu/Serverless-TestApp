@@ -17,8 +17,8 @@ namespace TestApp.Functions.Functions
 
         public AuthFunctions() : base()
         {
-            this._userRepository = (IUserRepository)this._container.GetService(typeof(IUserRepository));
-            this._tokenRepository = (ITokenRepository)this._container.GetService(typeof(ITokenRepository));
+            this._userRepository = (IUserRepository)this.Container.GetService(typeof(IUserRepository));
+            this._tokenRepository = (ITokenRepository)this.Container.GetService(typeof(ITokenRepository));
         }
 
         [FunctionName(nameof(GetToken))]
@@ -47,6 +47,36 @@ namespace TestApp.Functions.Functions
             }
 
             return this.Ok(this._tokenRepository.Generate(username));
+        }
+
+        [FunctionName(nameof(RemoveToken))]
+        public IActionResult RemoveToken(
+            [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "auth/token/remove")] HttpRequest req,
+            ILogger log)
+        {
+            log.LogInformation($"{nameof(RemoveToken)} function processed a request.");
+
+            string token = req.Query["token"];
+
+            if (string.IsNullOrWhiteSpace(token))
+            {
+                this.ModelState.AddModelError("token", "Missing token");
+
+                return this.BadRequest(ModelState);
+            }
+
+            var tokenData = this._tokenRepository.GetToken(token);
+
+            if (tokenData == null)
+            {
+                this.ModelState.AddModelError("token", "Invalid token");
+
+                return this.BadRequest(ModelState);
+            }
+
+            this._tokenRepository.Remove(token);
+
+            return this.NoContent();
         }
     }
 }
