@@ -30,7 +30,8 @@ namespace TestApp.Functions
 
         public Startup Configure()
         {
-            this.ConfigureServices(this._services);
+            //this.ConfigureServices(this._services);
+            this.ConfigureDevelopmentServices(this._services);
 
             return this;
         }
@@ -48,10 +49,10 @@ namespace TestApp.Functions
 
             services.AddTransient<IDataRepository>(s =>
                 new AzureFileShareRepository(
-                    Environment.GetEnvironmentVariable("Storage:Locations:ConnectionString"),
-                    Environment.GetEnvironmentVariable("Storage:Locations:Root"),
-                    Environment.GetEnvironmentVariable("Storage:Locations:Uploads"),
-                    Environment.GetEnvironmentVariable("Storage:Locations:Reports")));
+                    Environment.GetEnvironmentVariable("Storage_Locations_ConnectionString"),
+                    Environment.GetEnvironmentVariable("Storage_Locations_Root"),
+                    Environment.GetEnvironmentVariable("Storage_Locations_Uploads"),
+                    Environment.GetEnvironmentVariable("Storage_Locations_Reports")));
         }
 
         private void ConfigureDevelopmentServices(IServiceCollection services)
@@ -60,11 +61,11 @@ namespace TestApp.Functions
 
             services.AddTransient<IDataRepository>(s => new LocalFileShareRepository(
                 Path.Combine(
-                    Environment.GetEnvironmentVariable("Storage:Locations:Root"),
-                    Environment.GetEnvironmentVariable("Storage:Locations:Uploads")),
+                    Environment.GetEnvironmentVariable("Storage_Locations_Root"),
+                    Environment.GetEnvironmentVariable("Storage_Locations_Uploads")),
                 Path.Combine(
-                    Environment.GetEnvironmentVariable("Storage:Locations:Root"),
-                    Environment.GetEnvironmentVariable("Storage:Locations:Reports"))));
+                    Environment.GetEnvironmentVariable("Storage_Locations_Root"),
+                    Environment.GetEnvironmentVariable("Storage_Locations_Reports"))));
         }
 
         private void ConfigureCommonServices(IServiceCollection services)
