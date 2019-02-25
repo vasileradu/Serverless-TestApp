@@ -49,7 +49,7 @@ namespace TestApp.Functions
 
             services.AddTransient<IDataRepository>(s =>
                 new AzureFileShareRepository(
-                    Environment.GetEnvironmentVariable("Storage_Locations_ConnectionString"),
+                    Environment.GetEnvironmentVariable("ConnectionStrings:Storage"),
                     Environment.GetEnvironmentVariable("Storage_Locations_Root"),
                     Environment.GetEnvironmentVariable("Storage_Locations_Uploads"),
                     Environment.GetEnvironmentVariable("Storage_Locations_Reports")));
