@@ -55,7 +55,7 @@ namespace TestApp.Functions
 
             services.AddTransient<IDataRepository>(s =>
                 new AzureFileShareRepository(
-                    Environment.GetEnvironmentVariable("ConnectionStrings:Storage"),
+                    Environment.GetEnvironmentVariable("ConnectionStrings_Storage"),
                     Environment.GetEnvironmentVariable("Storage_Locations_Root"),
                     Environment.GetEnvironmentVariable("Storage_Locations_Uploads"),
                     Environment.GetEnvironmentVariable("Storage_Locations_Reports")));
@@ -80,7 +80,7 @@ namespace TestApp.Functions
             services.AddTransient<ITokenRepository, TokenRepository>();
 
             services.AddDbContext<TestAppAuthContext>(options =>
-                options.UseSqlServer(Environment.GetEnvironmentVariable("ConnectionStrings:AuthDb")));
+                options.UseSqlServer(Environment.GetEnvironmentVariable("ConnectionStrings_AuthDb")));
         }
 
         private bool IsDevelopment()
