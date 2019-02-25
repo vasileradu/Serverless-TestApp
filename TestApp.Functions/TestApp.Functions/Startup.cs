@@ -30,8 +30,14 @@ namespace TestApp.Functions
 
         public Startup Configure()
         {
-            //this.ConfigureServices(this._services);
-            this.ConfigureDevelopmentServices(this._services);
+            if (this.IsDevelopment())
+            {
+                this.ConfigureDevelopmentServices(this._services);
+            }
+            else
+            {
+                this.ConfigureServices(this._services);
+            }
 
             return this;
         }
@@ -75,6 +81,13 @@ namespace TestApp.Functions
 
             services.AddDbContext<TestAppAuthContext>(options =>
                 options.UseSqlServer(Environment.GetEnvironmentVariable("ConnectionStrings:AuthDb")));
+        }
+
+        private bool IsDevelopment()
+        {
+            string envType = Environment.GetEnvironmentVariable("EnvironmentType") ?? "Development";
+
+            return envType.Equals("Development");
         }
     }
 }
