@@ -1,0 +1,3 @@
+.\ConvertAllCsvToInflux.ps1 -path "C:\Projects\Serverless-TestApp\Evaluation\Results\calibration\phase5" -output "influx.out"
+
+curl -i -XPOST "http://localhost:8086/write?db=TestApp&precision=ns" --data-binary @influx.out
