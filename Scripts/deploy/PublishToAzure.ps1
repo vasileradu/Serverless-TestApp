@@ -1,5 +1,6 @@
 param (
-    [Parameter(Mandatory=$true)][string]$app    
+    [Parameter(Mandatory=$true)][string]$app,
+    [Parameter(Mandatory=$false)][string]$selfContained="false"
  )
 
 ### helper functions
@@ -46,8 +47,16 @@ function Update-Config($app) {
 		break;
 	}
 
-	Copy-Item -Path $prodNewConfigPath -Destination $prodOldConfigPath -Force
-	Rename-Item -Path "$buildsPath\TestApp.$app.exe" -NewName "TestApp.exe"
+	$startText = "dotnet TestApp.$app.dll --hosturl http://0.0.0.0:5000";
+	
+	if($selfContained -eq "true") {
+		Copy-Item -Path $prodNewConfigPath -Destination $prodOldConfigPath -Force
+		Rename-Item -Path "$buildsPath\TestApp.$app.exe" -NewName "TestApp.exe"
+		
+		$startText = "TestApp.exe --hosturl http://0.0.0.0:5000";
+	}
+	
+	$startText | Set-Content "$buildsPath\StartApp.bat"
 	
 	Write-Host "Updated config to production settings" -ForegroundColor Green	
 }
@@ -74,7 +83,7 @@ function Archive-App($app) {
 $appPath = Get-AppPath $app;
 $buildsPath = Get-BuildsPath $app;
 
-Write-Host "Starting publish for application: $app ..."
+Write-Host "Starting publish for application: $app ...self-contained:$selfContained"
 
 Write-Host "-- Cleanup Step --" -ForegroundColor Yellow
 if (Test-Path $buildsPath) {
@@ -85,7 +94,7 @@ Write-Host "------------------" -ForegroundColor Yellow
 
 Write-Host "-- Publish Step --" -ForegroundColor Yellow
 Write-Host "Publishing $appPath to $buildsPath"
-$publishResult = & dotnet publish $appPath -c Release -r win-x64 --self-contained=true -o $buildsPath
+$publishResult = & dotnet publish $appPath -c Release -r win-x64 --self-contained $selfContained -o $buildsPath
 Write-Host "$publishResult"
 Write-Host "------------------" -ForegroundColor Yellow
 
