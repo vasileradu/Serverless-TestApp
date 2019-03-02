@@ -9,9 +9,9 @@
  az vm create --resource-group TestApp --name "analysis" --location "westeurope" --image win2016datacenter --size Standard_A2m_v2 --admin-username "TestAppAdmin" --admin-password "Pa55word!Pa55word!" --storage-sku Standard_LRS --nsg "TestApp-ngs" --vnet-name "TestApp-vnet" --subnet "TestApp-subnet" --private-ip-address 10.0.0.5 --public-ip-address "IP_Analysis" --tags "persistance=onetime"
  
  # service.auth
- az vm create --resource-group TestApp --name "auth" --location "westeurope" --image "vm-image-service-auth" --size Standard_B1s --admin-username "TestAppAdmin" --admin-password "Pa55word!Pa55word!" --storage-sku Standard_LRS --nsg "TestApp-ngs" --vnet-name "TestApp-vnet" --subnet "TestApp-subnet" --private-ip-address 10.0.0.6 --public-ip-address "IP_Auth" --tags "persistance=onetime"
+ az vm create --resource-group TestApp --name "auth" --location "westeurope" --image "vm-image-service-auth" --size Standard_B2s --admin-username "TestAppAdmin" --admin-password "Pa55word!Pa55word!" --storage-sku Standard_LRS --nsg "TestApp-ngs" --vnet-name "TestApp-vnet" --subnet "TestApp-subnet" --private-ip-address 10.0.0.6 --public-ip-address "IP_Auth" --tags "persistance=onetime"
  
- az vm create --resource-group TestApp --name "auth" --location "westeurope" --image win2016datacenter --size Standard_B1s --admin-username "TestAppAdmin" --admin-password "Pa55word!Pa55word!" --storage-sku Standard_LRS --nsg "TestApp-ngs" --vnet-name "TestApp-vnet" --subnet "TestApp-subnet" --private-ip-address 10.0.0.6 --public-ip-address "IP_Auth" --tags "persistance=onetime"
+ az vm create --resource-group TestApp --name "auth" --location "westeurope" --image win2016datacenter --size Standard_B2s --admin-username "TestAppAdmin" --admin-password "Pa55word!Pa55word!" --storage-sku Standard_LRS --nsg "TestApp-ngs" --vnet-name "TestApp-vnet" --subnet "TestApp-subnet" --private-ip-address 10.0.0.6 --public-ip-address "IP_Auth" --tags "persistance=onetime"
   
  # service.reports
  az vm create --resource-group TestApp --name "reports" --location "westeurope" --image "vm-image-service-reports" --size Standard_B2s --admin-username "TestAppAdmin" --admin-password "Pa55word!Pa55word!" --storage-sku Standard_LRS --nsg "TestApp-ngs" --vnet-name "TestApp-vnet" --subnet "TestApp-subnet" --private-ip-address 10.0.0.7 --public-ip-address "IP_Reports" --tags "persistance=onetime"
