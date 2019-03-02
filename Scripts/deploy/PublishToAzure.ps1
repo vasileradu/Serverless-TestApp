@@ -47,12 +47,11 @@ function Update-Config($app) {
 		break;
 	}
 
-	$startText = "dotnet TestApp.$app.dll --hosturl http://0.0.0.0:5000";
+	Copy-Item -Path $prodNewConfigPath -Destination $prodOldConfigPath -Force
 	
-	if($selfContained -eq "true") {
-		Copy-Item -Path $prodNewConfigPath -Destination $prodOldConfigPath -Force
-		Rename-Item -Path "$buildsPath\TestApp.$app.exe" -NewName "TestApp.exe"
-		
+	$startText = "dotnet TestApp.$app.dll --hosturl http://0.0.0.0:5000";
+	if($selfContained -eq "true") {	
+		Rename-Item -Path "$buildsPath\TestApp.$app.exe" -NewName "TestApp.exe"		
 		$startText = "TestApp.exe --hosturl http://0.0.0.0:5000";
 	}
 	
