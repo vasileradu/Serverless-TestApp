@@ -80,10 +80,10 @@
           <boolProp name="LoopController.continue_forever">false</boolProp>
           <intProp name="LoopController.loops">-1</intProp>
         </elementProp>
-        <stringProp name="ThreadGroup.num_threads">${s1_users}</stringProp>
-        <stringProp name="ThreadGroup.ramp_time">${s1_rampup}</stringProp>
+        <stringProp name="ThreadGroup.num_threads">${__P(s1_users)}</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">${__P(s1_rampup)}</stringProp>
         <boolProp name="ThreadGroup.scheduler">true</boolProp>
-        <stringProp name="ThreadGroup.duration">${duration}</stringProp>
+        <stringProp name="ThreadGroup.duration">${__P(duration)}</stringProp>
         <stringProp name="ThreadGroup.delay"></stringProp>
       </ThreadGroup>
       <hashTree>
@@ -326,10 +326,10 @@
           <boolProp name="LoopController.continue_forever">false</boolProp>
           <intProp name="LoopController.loops">-1</intProp>
         </elementProp>
-        <stringProp name="ThreadGroup.num_threads">${s2_users}</stringProp>
-        <stringProp name="ThreadGroup.ramp_time">${s2_rampup}</stringProp>
+        <stringProp name="ThreadGroup.num_threads">${__P(s2_users)}</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">${__P(s2_rampup)}</stringProp>
         <boolProp name="ThreadGroup.scheduler">true</boolProp>
-        <stringProp name="ThreadGroup.duration">${duration}</stringProp>
+        <stringProp name="ThreadGroup.duration">${__P(duration)}</stringProp>
         <stringProp name="ThreadGroup.delay"></stringProp>
       </ThreadGroup>
       <hashTree>
@@ -591,10 +591,10 @@
           <boolProp name="LoopController.continue_forever">false</boolProp>
           <intProp name="LoopController.loops">-1</intProp>
         </elementProp>
-        <stringProp name="ThreadGroup.num_threads">${s3_users}</stringProp>
-        <stringProp name="ThreadGroup.ramp_time">${s3_rampup}</stringProp>
+        <stringProp name="ThreadGroup.num_threads">${__P(s3_users)}</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">${__P(s3_rampup)}</stringProp>
         <boolProp name="ThreadGroup.scheduler">true</boolProp>
-        <stringProp name="ThreadGroup.duration">${duration}</stringProp>
+        <stringProp name="ThreadGroup.duration">${__P(duration)}</stringProp>
         <stringProp name="ThreadGroup.delay"></stringProp>
       </ThreadGroup>
       <hashTree>
@@ -810,10 +810,10 @@
           <boolProp name="LoopController.continue_forever">false</boolProp>
           <intProp name="LoopController.loops">-1</intProp>
         </elementProp>
-        <stringProp name="ThreadGroup.num_threads">${s4_users}</stringProp>
-        <stringProp name="ThreadGroup.ramp_time">${s4_rampup}</stringProp>
+        <stringProp name="ThreadGroup.num_threads">${__P(s4_users)}</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">${__P(s4_rampup)}</stringProp>
         <boolProp name="ThreadGroup.scheduler">true</boolProp>
-        <stringProp name="ThreadGroup.duration">${duration}</stringProp>
+        <stringProp name="ThreadGroup.duration">${__P(duration)}</stringProp>
         <stringProp name="ThreadGroup.delay"></stringProp>
       </ThreadGroup>
       <hashTree>
