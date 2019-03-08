@@ -184,7 +184,9 @@ $newStartDateMs = [math]::truncate($newStartDate.Subtract($epoch).TotalMilliSeco
 
 $lines = 0;
 
-New-Item -ItemType File -Force -Path $output
+if (!(Test-Path $output)) {
+	New-Item -ItemType File -Force -Path $output
+}
 
 Get-ChildItem $path | Where-Object {($_.Name.StartsWith("jmeter") -and ($_.Extension -eq ".results"))} | ForEach-Object {
 	# detect tags
