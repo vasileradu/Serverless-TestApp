@@ -25,4 +25,6 @@
  
  # jmeter
  az vm create --resource-group TestApp --name "jmeter" --location "westeurope" --image win2016datacenter --size Standard_D1_v2 --admin-username "TestAppAdmin" --admin-password "Pa55word!Pa55word!" --storage-sku Standard_LRS --nsg "TestApp-ngs" --vnet-name "TestApp-vnet" --subnet "TestApp-subnet" --private-ip-address 10.0.0.9 --tags "persistance=onetime"
+ 
+ az vm create --resource-group TestApp --name "jmeter" --location "westeurope" --image "vm-image-jmeter" --size Standard_B2s --admin-username "TestAppAdmin" --admin-password "Pa55word!Pa55word!" --storage-sku Standard_LRS --nsg "TestApp-ngs" --vnet-name "TestApp-vnet" --subnet "TestApp-subnet" --private-ip-address 10.0.0.9 --public-ip-address "IP_Jmeter" --tags "persistance=onetime"
   
