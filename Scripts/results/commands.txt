@@ -1,3 +1,13 @@
-.\ConvertAllCsvToInflux.ps1 -path "C:\Projects\Serverless-TestApp\Evaluation\Results\calibration\phase5" -output "influx.out"
+.\ConvertAllCsvToInflux.ps1 -path "C:\Projects\Serverless-TestApp\Evaluation\Results\phase5" -output "influx.out"
 
 curl -i -XPOST "http://localhost:8086/write?db=TestApp&precision=ns" --data-binary @influx.out
+
+
+## connect to jmeter win vm via PS
+#$cred = Get-Credential
+
+Enter-PSSession -ComputerName testapp-jmeter.westeurope.cloudapp.azure.com -Credential $cred
+
+
+## Copy files from jmeter win VM
+Copy-Item –Path 'C:\Results\*' –FromSession (New-PSSession –ComputerName testapp-jmeter.westeurope.cloudapp.azure.com -Credential $cred) –Destination 'C:\Projects\Serverless-TestApp\Evaluation\Results\phase6'
