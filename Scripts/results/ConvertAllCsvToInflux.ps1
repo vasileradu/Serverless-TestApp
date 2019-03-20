@@ -21,21 +21,21 @@ function Add-JmeterContent ($metricName, $inputFile, $output, $tags, $newStartDa
 	$headers = Rename-JmeterHeader($headers)
 	$filterTagsIndexes = @(2);
 	$additionalMs = [long]0;
-	
+	$usersPerScenario = @(0,0,0,0);	
 	$lines = 0;
 
-	Get-Content $inputFile | Select-Object -Skip 1 | ForEach-Object {
+	Get-Content $inputFile | Select-Object -Skip 1 | Sort-Object -Property @{Expression = {$_.Split($delimiter)[$timestampIndex]}} | ForEach-Object {
 		
 		if($_ -match 'Cleanup Storage Windows') {
 			return
 		}
-		
+				
 		$values = $_.Split($delimiter)		
 		$lastValue = ""
 		
 		$starTags = ""; # filtreable
 		$endTags = ""; # non-filtreable
-		$usersPerScenario = @{};
+		
 				
 		for ($index = 0; $index -lt $values.count; $index++) {
 			
@@ -71,14 +71,18 @@ function Add-JmeterContent ($metricName, $inputFile, $output, $tags, $newStartDa
 					$scenarioValues = $value.Split(" ");
 					$value = $scenarioValues[0] # scenario name will be added later;
 					
+					$scenarioNumber = [int]$value.Replace("Scenario", "") - [int]1;
+															
 					# number of threards (users) added now;
-					$threads = $scenarioValues[1].Split("-")[1];
+					$threads = [int]$scenarioValues[1].Split("-")[1];
 					$allThreads = 0;
 					
-					$usersPerScenario.Set_Item($value, [int]$threads)
+					if($threads -gt $usersPerScenario[$scenarioNumber]){
+						$usersPerScenario[$scenarioNumber] = $threads;
+					}
 										
-					foreach ($users in $usersPerScenario.GetEnumerator()) {
-						$allThreads += $($users.Value)
+					for ($i = 0; $i -lt $usersPerScenario.count; $i++) {
+						$allThreads += $usersPerScenario[$i]
 					}				
 					
 					$endTags += "startedThreads=" + $allThreads + $delimiter
