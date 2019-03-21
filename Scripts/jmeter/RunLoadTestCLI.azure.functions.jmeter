@@ -3,5 +3,6 @@
 # run jmeter from local
 .\jmeter -n -t C:\Projects\Serverless-TestApp\Evaluation\TestPlans\TestApp.TestCLI.FixedDuration.jmx -JConfigFile="C:\Projects\Serverless-TestApp\Evaluation\TestPlans\TestApp.Config.azure.functions" -JResultsFile="C:\Projects\Serverless-TestApp\Evaluation\Results\jmeter.azure.vm.functions.results"
 
+cd C:\jmeter\apache-jmeter-5.0\bin
 # run jmeter on jmeter-vm via Powerhsell
-.\jmeter -n -t C:\jmeter\TestPlans\TestApp.TestCLI.FixedDuration.jmx -JConfigFile="C:\testplans\TestApp.Config.azure.functions" -JResultsFile="C:\results\jmeter.azure.vm.functions.results"
+.\jmeter -n -t C:\jmeter\TestPlans\TestApp.TestCLI.FixedDuration.jmx -JConfigFile="C:\jmeter\testplans\TestApp.Config.azure.functions" -JResultsFile="C:\results\jmeter.azure.vm.functions.results"

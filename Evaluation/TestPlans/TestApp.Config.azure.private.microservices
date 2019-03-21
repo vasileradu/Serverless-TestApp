@@ -1,0 +1,2 @@
+host|analysis_prefix|auth_prefix|reports_prefix|files_prefix|port|storage
+|10.0.3.20|10.0.2.20|10.0.5.20|10.0.4.20|5000|Z:\\

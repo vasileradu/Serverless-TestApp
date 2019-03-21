@@ -1,3 +1,7 @@
 .\jmeter -n -t C:\jmeter\TestPlans\TestApp.TestCLI.FixedDuration.jmx -l "Y:\Results\jmeter.azure.monolith.logs" -JConfigFile="TestApp.Config.azure.monolith" -JResultsFile="Y:\Results\jmeter.azure.vm.monolith.results"
 
 .\jmeter -n -t C:\Projects\Serverless-TestApp\Evaluation\TestPlans\TestApp.TestCLI.FixedDuration.jmx -JConfigFile="C:\Projects\Serverless-TestApp\Evaluation\TestPlans\TestApp.Config.azure.monolith" -JResultsFile="C:\Projects\Serverless-TestApp\Evaluation\Results\jmeter.azure.vm.monolith.results"
+
+cd C:\jmeter\apache-jmeter-5.0\bin
+# run jmeter on jmeter-vm via Powerhsell
+.\jmeter -n -t C:\jmeter\TestPlans\TestApp.TestCLI.FixedDuration.jmx -JConfigFile="C:\jmeter\testplans\TestApp.Config.azure.private.monolith" -JResultsFile="C:\results\jmeter.azure.vm.monolith.results"

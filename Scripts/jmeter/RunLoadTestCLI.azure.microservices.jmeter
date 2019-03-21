@@ -1,3 +1,7 @@
 .\jmeter -n -t C:\jmeter\TestPlans\TestApp.TestCLI.jmx -l "Y:\Results\jmeter.azure.microservices.logs" -JConfigFile="TestApp.Config.azure.microservices" -JResultsFile="Y:\Results\jmeter.azure.vm.microservice.results"
 
 .\jmeter -n -t C:\Projects\Serverless-TestApp\Evaluation\TestPlans\TestApp.TestCLI.FixedDuration.jmx -JConfigFile="C:\Projects\Serverless-TestApp\Evaluation\TestPlans\TestApp.Config.azure.microservices" -JResultsFile="C:\Projects\Serverless-TestApp\Evaluation\Results\jmeter.azure.vm.microservice.results"
+
+cd C:\jmeter\apache-jmeter-5.0\bin
+# run jmeter on jmeter-vm via Powerhsell
+.\jmeter -n -t C:\jmeter\TestPlans\TestApp.TestCLI.FixedDuration.jmx -JConfigFile="C:\jmeter\testplans\TestApp.Config.azure.microservices" -JResultsFile="C:\results\jmeter.azure.vm.microservice.results"

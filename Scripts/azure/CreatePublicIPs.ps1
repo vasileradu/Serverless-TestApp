@@ -14,4 +14,4 @@ az network public-ip create --name "IP_Reports" --resource-group TestApp --dns-n
 az network public-ip create --name "IP_Files" --resource-group TestApp --dns-name "testapp-service-files" --location "westeurope" --allocation-method Static --sku Standard --version IPv4 --zone 1 --tags "persistance=onetime"
 
 # jmeter
-az network public-ip create --name "IP_Jmeter" --resource-group TestApp --dns-name "testapp-jmeter" --location "westeurope" --allocation-method Static --sku Standard --version IPv4 --tags "persistance=onetime"
+az network public-ip create --name "IP_Jmeter" --resource-group TestApp --dns-name "testapp-jmeter" --location "westeurope" --allocation-method Static --sku Standard --version IPv4 --zone 1 --tags "persistance=onetime"
