@@ -1,9 +1,9 @@
 <# .SYNOPSIS #>
 param (
-    [Parameter(Mandatory=$true, HelpMessage = '(1) monolith, (2) service-auth, (3) service-analysis, (4) service-files, (5)service-reports')][int]$app
+    [Parameter(Mandatory=$true, HelpMessage = '(1) monolith, (2) auth, (3) analysis, (4) files, (5)reports')][int]$app
 )
 
-$apps = @("monolith", "service-auth", "service-analysis", "service-files", "service-reports");
+$apps = @("monolith", "auth", "analysis", "files", "reports");
 $privateIps=@("10.0.1.20","10.0.2.20","10.0.3.20","10.0.4.20","10.0.5.20");
 $subnets = @("GatewayMonolith", "GatewayAuth", "GatewayAnalysis", "GatewayFiles", "GatewayReports");
 $sizes=@("Standard_B4ms","Standard_B2s","Standard_B2ms","Standard_B2s","Standard_B2s");
@@ -63,7 +63,7 @@ az network application-gateway http-listener update --resource-group "TestApp" -
 
 Write-Host "-- Creating ScaleSet --" -ForegroundColor Yellow
 
-az vmss create --image "vm-image-$appName" --name "vmss$appName" --resource-group TestApp --vm-sku "$size" --admin-username "TestAppAdmin" --admin-password "Pa55word!Pa55word!" --nsg TestApp-ngs --instance-count 1 --app-gateway "AG_$appName" --subnet "TestApp-subnet" --vnet-name "TestApp-vnet" --upgrade-policy-mode "Automatic" --tags "persistance=onetime"
+az vmss create --image "vmi-$appName" --name "vmss$appName" --resource-group TestApp --vm-sku "$size" --admin-username "TestAppAdmin" --admin-password "Pa55word!Pa55word!" --nsg TestApp-ngs --instance-count 1 --app-gateway "AG_$appName" --subnet "TestApp-subnet" --vnet-name "TestApp-vnet" --upgrade-policy-mode "Automatic" --tags "persistance=onetime"
 
 Write-Host "-- Creating Autoscale rule --" -ForegroundColor Yellow
 az monitor autoscale create --resource-group TestApp --resource "vmss$appName" --resource-type Microsoft.Compute/virtualMachineScaleSets --name "autoscale$appName" --min-count 1 --max-count 5 --count 1
