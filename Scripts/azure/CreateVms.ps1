@@ -1,7 +1,7 @@
  # monolith
  az vm create --resource-group TestApp --name "monolith" --location "westeurope" --image "vmi-monolith" --size Standard_B4ms --admin-username "TestAppAdmin" --admin-password "Pa55word!Pa55word!" --storage-sku Standard_LRS --nsg "TestApp-ngs" --vnet-name "TestApp-vnet" --subnet "TestApp-subnet" --private-ip-address 10.0.0.4 --public-ip-address "IP_Monolith" --tags "persistance=onetime"
  
- az vm create --resource-group TestApp --name "monolith" --location "westeurope" --image win2016datacenter --size Standard_B4ms --admin-username "TestAppAdmin" --admin-password "Pa55word!Pa55word!" --storage-sku Standard_LRS --nsg "TestApp-ngs" --vnet-name "TestApp-vnet" --subnet "TestApp-subnet" --private-ip-address 10.0.0.4 --public-ip-address "IP_Monolith" --tags "persistance=onetime"
+ az vm create --resource-group TestApp --name "monolith" --location "westeurope" --image win2016datacenter --size Standard_B2s --admin-username "TestAppAdmin" --admin-password "Pa55word!Pa55word!" --storage-sku Standard_LRS --nsg "TestApp-ngs" --vnet-name "TestApp-vnet" --subnet "TestApp-subnet" --private-ip-address 10.0.0.4 --public-ip-address "IP_Monolith" --tags "persistance=onetime"
  
  # service.analysis
  az vm create --resource-group TestApp --name "analysis" --location "westeurope" --image "vmi-analysis" --size Standard_B2ms --admin-username "TestAppAdmin" --admin-password "Pa55word!Pa55word!" --storage-sku Standard_LRS --nsg "TestApp-ngs" --vnet-name "TestApp-vnet" --subnet "TestApp-subnet" --private-ip-address 10.0.0.5 --public-ip-address "IP_Analysis" --tags "persistance=onetime"
@@ -24,9 +24,9 @@
  az vm create --resource-group TestApp --name "files" --location "westeurope" --image win2016datacenter --size Standard_B2s --admin-username "TestAppAdmin" --admin-password "Pa55word!Pa55word!" --storage-sku Standard_LRS --nsg "TestApp-ngs" --vnet-name "TestApp-vnet" --subnet "TestApp-subnet" --private-ip-address 10.0.0.8 --public-ip-address "IP_Files" --tags "persistance=onetime" 
  
  # jmeter
- az vm create --resource-group TestApp --name "jmeter" --location "westeurope" --image "vmi-jmeter" --size Standard_B4ms --admin-username "TestAppAdmin" --admin-password "Pa55word!Pa55word!" --storage-sku Standard_LRS --nsg "TestApp-ngs" --vnet-name "TestApp-vnet" --subnet "TestApp-subnet" --public-ip-address "IP_Jmeter" --private-ip-address 10.0.0.9 --tags "persistance=onetime"
+ az vm create --resource-group TestApp --name "jmeter" --location "westeurope" --image "vmi-jmeter" --size Standard_B4ms --admin-username "TestAppAdmin" --admin-password "Pa55word!Pa55word!" --storage-sku Standard_LRS --nsg "TestApp-ngs" --vnet-name "TestApp-vnet" --subnet "TestApp-subnet" --public-ip-address "IP_Jmeter" --private-ip-address 10.0.0.50 --tags "persistance=onetime"
  
- az vm create --resource-group TestApp --name "jmeter" --location "westeurope" --image win2016datacenter --size Standard_D1_v2 --admin-username "TestAppAdmin" --admin-password "Pa55word!Pa55word!" --storage-sku Standard_LRS --nsg "TestApp-ngs" --vnet-name "TestApp-vnet" --subnet "TestApp-subnet" --private-ip-address 10.0.0.9 --tags "persistance=onetime"
+ az vm create --resource-group TestApp --name "jmeter" --location "westeurope" --image win2016datacenter --size Standard_B4ms --admin-username "TestAppAdmin" --admin-password "Pa55word!Pa55word!" --storage-sku Standard_LRS --nsg "TestApp-ngs" --vnet-name "TestApp-vnet" --subnet "TestApp-subnet" --private-ip-address 10.0.0.50 --tags "persistance=onetime"
  
  
   
