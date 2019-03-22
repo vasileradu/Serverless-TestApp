@@ -64,7 +64,7 @@ az network application-gateway http-listener update --resource-group "TestApp" -
 
 Write-Host "-- Creating ScaleSet --" -ForegroundColor Yellow
 
-az vmss create --image "vmi-$appName" --name "vmss$appName" --resource-group TestApp --vm-sku "$size" --admin-username "TestAppAdmin" --admin-password "Pa55word!Pa55word!" --nsg TestApp-ngs --instance-count 1 --app-gateway "AG_$appName" --subnet "TestApp-subnet" --vnet-name "TestApp-vnet" --upgrade-policy-mode "Automatic" --tags "persistance=onetime"
+az vmss create --image "vmi-$appName" --name "vmss$appName" --resource-group TestApp --vm-sku "$size" --admin-username "TestAppAdmin" --admin-password "Pa55word!Pa55word!" --nsg TestApp-ngs --instance-count 1 --app-gateway "AG_$appName" --subnet "TestApp-subnet" --vnet-name "TestApp-vnet" --upgrade-policy-mode "Automatic" --tags "persistance=onetime" --public-ip-per-vm
 
 Write-Host "-- Adding OS Guest Diagnostic Metrics --" -ForegroundColor Yellow
 az vmss diagnostics set --resource-group TestApp --vmss-name "vmss$appName" --settings ".\vmss.$appName.config.json" --protected-settings "$diagSecretPath\vmss.secret.config.json"
@@ -72,11 +72,16 @@ az vmss diagnostics set --resource-group TestApp --vmss-name "vmss$appName" --se
 Write-Host "-- Creating Autoscale rules --" -ForegroundColor Yellow
 az monitor autoscale create --resource-group TestApp --resource "vmss$appName" --resource-type Microsoft.Compute/virtualMachineScaleSets --name "autoscale$appName" --min-count 1 --max-count 5 --count 1
 
+#default rules
+az monitor autoscale rule create -g TestApp --autoscale-name "autoscale$appName" --condition "Percentage CPU > 50 avg 5m" --scale out 1
+az monitor autoscale rule create -g TestApp --autoscale-name "autoscale$appName" --condition "Percentage CPU < 20 avg 5m" --scale in 1
+
+#OS Guest rules
 az monitor autoscale rule create -g TestApp --autoscale-name "autoscale$appName" --condition "/builtin/processor/percentprocessortime > 70 avg 5m" --scale out 1
 az monitor autoscale rule create -g TestApp --autoscale-name "autoscale$appName" --condition "/builtin/processor/percentprocessortime < 30 avg 5m" --scale in 1
 
-az monitor autoscale rule create -g TestApp --autoscale-name "autoscale$appName" --condition "/builtin/memory/usedmemory > 60 avg 5m" --scale out 1
-az monitor autoscale rule create -g TestApp --autoscale-name "autoscale$appName" --condition "/builtin/memory/usedmemory < 30 avg 5m" --scale in 1
+az monitor autoscale rule create -g TestApp --autoscale-name "autoscale$appName" --condition "/builtin/memory/percentusedmemory > 60 avg 5m" --scale out 1
+az monitor autoscale rule create -g TestApp --autoscale-name "autoscale$appName" --condition "/builtin/memory/percentusedmemory < 30 avg 5m" --scale in 1
 
 $elapsedTime = $(get-date) - $StartTime
 $totalTime = "{0:HH:mm:ss}" -f ([datetime]$elapsedTime.Ticks)
