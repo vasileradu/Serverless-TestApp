@@ -63,6 +63,11 @@
             <stringProp name="Argument.value">analysis_sample_default.json</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
+          <elementProp name="is_amazon" elementType="Argument">
+            <stringProp name="Argument.name">is_amazon</stringProp>
+            <stringProp name="Argument.value">false</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
         </collectionProp>
       </elementProp>
       <stringProp name="TestPlan.user_define_classpath"></stringProp>
@@ -173,40 +178,99 @@
         <stringProp name="ThreadGroup.delay"></stringProp>
       </ThreadGroup>
       <hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Upload" enabled="true">
-          <elementProp name="HTTPsampler.Files" elementType="HTTPFileArgs">
-            <collectionProp name="HTTPFileArgs.files">
-              <elementProp name="${upload_path}" elementType="HTTPFileArg">
-                <stringProp name="File.path">${upload_path}</stringProp>
-                <stringProp name="File.paramname">file</stringProp>
-                <stringProp name="File.mimetype">application/x-www-form-urlencoded</stringProp>
-              </elementProp>
-            </collectionProp>
-          </elementProp>
-          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
-            <collectionProp name="Arguments.arguments"/>
-          </elementProp>
-          <stringProp name="HTTPSampler.domain">${host}${files_prefix}</stringProp>
-          <stringProp name="HTTPSampler.port">${port}</stringProp>
-          <stringProp name="HTTPSampler.protocol"></stringProp>
-          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-          <stringProp name="HTTPSampler.path">/api/files/upload</stringProp>
-          <stringProp name="HTTPSampler.method">POST</stringProp>
-          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
-          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
-          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
-          <boolProp name="HTTPSampler.DO_MULTIPART_POST">true</boolProp>
-          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
-          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
-          <stringProp name="HTTPSampler.response_timeout"></stringProp>
-        </HTTPSamplerProxy>
+        <IfController guiclass="IfControllerPanel" testclass="IfController" testname="IF AMAZON" enabled="true">
+          <stringProp name="IfController.condition">${__jexl3(${is_amazon}== true,)}</stringProp>
+          <boolProp name="IfController.evaluateAll">false</boolProp>
+          <boolProp name="IfController.useExpression">true</boolProp>
+        </IfController>
         <hashTree>
-          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="RetrieveFilename" enabled="true">
-            <stringProp name="JSONPostProcessor.referenceNames">uploadFilename</stringProp>
-            <stringProp name="JSONPostProcessor.jsonPathExprs">$.filename</stringProp>
-            <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
-          </JSONPostProcessor>
-          <hashTree/>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="UploadAws" enabled="true">
+            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">{&#xd;
+	body : &quot;CAGCACCGTTTAAACCAGACCGACACTAGATCTATAAGGTCCGCCATGCAGACGAGAGCGCACGGAGATCACCGAGCGATCTATCAGATCGGCGACCATTTGTGAGGTACTGGAGCCGAGAGGTAACTACGATGCCGCTAAGAACCTCTCGGTCGTCGCTGACGTTTACACTCTAGTCTCATTATAATCGTTCGCTATTCAGGGATTGACCAACACCGGAAAACATCTCACTTGAAGTAATGTATACGACAGAGTCCGTGCACCTACCAAACCTCTTTAGTCTAAGTTCAGACTAGTTGGAAGTTTGTCTAGATCTCAGATTTTGTCACTAGAGGACGCACGCTCTATTTTTATGATCCATTGATGTCCCTGACGCTGCAAAATTTGCAACCAGGCAGTCTTCGCGGTAGGTCCTAGTGCAATGGGGCTTTTTTTCCATAGTCCTCGAGAGGAGGAGACGTCAGTCCAGATATCTTTGATGTCGTGATTGGAAGGACCCTTGGCCCTCCACCCTTAGGCAGTGTATACTCTTCCATAAACGGGCTATTAGTTATGAGGTCCGAAGATTGAAAAAGGTGAGGGAACTCGGCCGAACGGGAAAGACGGACATCTAGGCAACCTGACCACGGTTGCGCGTCCGTATCAAGGTCCTCTTAATAGGCCCCCGTTACTGTTGGTCGTAGAGCCCAGAACGGGTTGGCCAGATGTGCGACAATATCGCTTAGTCGCTCTTGGGCCGCGGTGCGCTACCTTGCAGGAATTGAGACCGTCCGTTAATTTCCCTTGCATATATATTGCGTTTCTTTGACCTTTTAACCGCTCTCTTAGAAGAGAGACAGATAGCTTCTTACCGGTGCGCCACCGTAGGCAGTACGATCGCACGCCCCATGTGAACGATTGGTAAACCCAGTGTCCTGTGAGCGACAAAAGCTTAAATGGGAAATACGCGCCCATAACTTGGTGCGAATACGGGTCGTAGCAATGTTCGTCTGACTATGAT&quot;&#xd;
+}&#xd;
+</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+            <stringProp name="HTTPSampler.domain">${host}${files_prefix}</stringProp>
+            <stringProp name="HTTPSampler.port">${port}</stringProp>
+            <stringProp name="HTTPSampler.protocol"></stringProp>
+            <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+            <stringProp name="HTTPSampler.path">/api/files/upload</stringProp>
+            <stringProp name="HTTPSampler.method">POST</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+            <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+              <collectionProp name="HeaderManager.headers">
+                <elementProp name="" elementType="Header">
+                  <stringProp name="Header.name">Content-Type</stringProp>
+                  <stringProp name="Header.value">application/json</stringProp>
+                </elementProp>
+              </collectionProp>
+            </HeaderManager>
+            <hashTree/>
+            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="RetrieveFilename" enabled="true">
+              <stringProp name="JSONPostProcessor.referenceNames">uploadFilename</stringProp>
+              <stringProp name="JSONPostProcessor.jsonPathExprs">$.filename</stringProp>
+              <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+            </JSONPostProcessor>
+            <hashTree/>
+          </hashTree>
+        </hashTree>
+        <IfController guiclass="IfControllerPanel" testclass="IfController" testname="IF NOT AMAZON" enabled="true">
+          <stringProp name="IfController.condition">${__jexl3(${is_amazon}== false,)}</stringProp>
+          <boolProp name="IfController.evaluateAll">false</boolProp>
+          <boolProp name="IfController.useExpression">true</boolProp>
+        </IfController>
+        <hashTree>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Upload" enabled="true">
+            <elementProp name="HTTPsampler.Files" elementType="HTTPFileArgs">
+              <collectionProp name="HTTPFileArgs.files">
+                <elementProp name="${upload_path}" elementType="HTTPFileArg">
+                  <stringProp name="File.path">${upload_path}</stringProp>
+                  <stringProp name="File.paramname">file</stringProp>
+                  <stringProp name="File.mimetype">application/x-www-form-urlencoded</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+              <collectionProp name="Arguments.arguments"/>
+            </elementProp>
+            <stringProp name="HTTPSampler.domain">${host}${files_prefix}</stringProp>
+            <stringProp name="HTTPSampler.port">${port}</stringProp>
+            <stringProp name="HTTPSampler.protocol"></stringProp>
+            <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+            <stringProp name="HTTPSampler.path">/api/files/upload</stringProp>
+            <stringProp name="HTTPSampler.method">POST</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.DO_MULTIPART_POST">true</boolProp>
+            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+            <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="RetrieveFilename" enabled="true">
+              <stringProp name="JSONPostProcessor.referenceNames">uploadFilename</stringProp>
+              <stringProp name="JSONPostProcessor.jsonPathExprs">$.filename</stringProp>
+              <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+            </JSONPostProcessor>
+            <hashTree/>
+          </hashTree>
         </hashTree>
         <TestAction guiclass="TestActionGui" testclass="TestAction" testname="Think Time" enabled="true">
           <intProp name="ActionProcessor.action">1</intProp>
