@@ -80,7 +80,7 @@ namespace TestApp.Core.FileStorage.Repositories
                 Task.WaitAll(transferUtility.UploadAsync(
                     stream,
                     this._bucketName,
-                    this.FormatReportsPath(fileName)));
+                    this.FormatUploadsPath(fileName)));
             }
 
             return Task.FromResult(fileName);
