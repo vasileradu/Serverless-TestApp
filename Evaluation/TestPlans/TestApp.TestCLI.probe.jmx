@@ -65,7 +65,12 @@
           </elementProp>
           <elementProp name="is_amazon" elementType="Argument">
             <stringProp name="Argument.name">is_amazon</stringProp>
-            <stringProp name="Argument.value">false</stringProp>
+            <stringProp name="Argument.value">true</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="protocol" elementType="Argument">
+            <stringProp name="Argument.name">protocol</stringProp>
+            <stringProp name="Argument.value">https</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
         </collectionProp>
@@ -94,8 +99,8 @@
               <elementProp name="" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
                 <stringProp name="Argument.value">{&#xd;
-	username: &quot;user1&quot;,&#xd;
-	password: &quot;password&quot;&#xd;
+	&quot;username&quot;: &quot;user1&quot;,&#xd;
+	&quot;password&quot;: &quot;password&quot;&#xd;
 }</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
               </elementProp>
@@ -103,7 +108,7 @@
           </elementProp>
           <stringProp name="HTTPSampler.domain">${host}${auth_prefix}</stringProp>
           <stringProp name="HTTPSampler.port">${port}</stringProp>
-          <stringProp name="HTTPSampler.protocol"></stringProp>
+          <stringProp name="HTTPSampler.protocol">${protocol}</stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
           <stringProp name="HTTPSampler.path">/api/auth/token/get</stringProp>
           <stringProp name="HTTPSampler.method">POST</stringProp>
@@ -150,7 +155,7 @@
           </elementProp>
           <stringProp name="HTTPSampler.domain">${host}${auth_prefix}</stringProp>
           <stringProp name="HTTPSampler.port">${port}</stringProp>
-          <stringProp name="HTTPSampler.protocol"></stringProp>
+          <stringProp name="HTTPSampler.protocol">${protocol}</stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
           <stringProp name="HTTPSampler.path">/api/auth/token/remove?token=${token}</stringProp>
           <stringProp name="HTTPSampler.method">POST</stringProp>
@@ -162,7 +167,17 @@
           <stringProp name="HTTPSampler.connect_timeout"></stringProp>
           <stringProp name="HTTPSampler.response_timeout"></stringProp>
         </HTTPSamplerProxy>
-        <hashTree/>
+        <hashTree>
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+            <collectionProp name="HeaderManager.headers">
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Content-Type</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+            </collectionProp>
+          </HeaderManager>
+          <hashTree/>
+        </hashTree>
       </hashTree>
       <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Files" enabled="true">
         <stringProp name="TestPlan.comments">Upload - Cleanup</stringProp>
@@ -191,7 +206,7 @@
                 <elementProp name="" elementType="HTTPArgument">
                   <boolProp name="HTTPArgument.always_encode">false</boolProp>
                   <stringProp name="Argument.value">{&#xd;
-	body : &quot;CAGCACCGTTTAAACCAGACCGACACTAGATCTATAAGGTCCGCCATGCAGACGAGAGCGCACGGAGATCACCGAGCGATCTATCAGATCGGCGACCATTTGTGAGGTACTGGAGCCGAGAGGTAACTACGATGCCGCTAAGAACCTCTCGGTCGTCGCTGACGTTTACACTCTAGTCTCATTATAATCGTTCGCTATTCAGGGATTGACCAACACCGGAAAACATCTCACTTGAAGTAATGTATACGACAGAGTCCGTGCACCTACCAAACCTCTTTAGTCTAAGTTCAGACTAGTTGGAAGTTTGTCTAGATCTCAGATTTTGTCACTAGAGGACGCACGCTCTATTTTTATGATCCATTGATGTCCCTGACGCTGCAAAATTTGCAACCAGGCAGTCTTCGCGGTAGGTCCTAGTGCAATGGGGCTTTTTTTCCATAGTCCTCGAGAGGAGGAGACGTCAGTCCAGATATCTTTGATGTCGTGATTGGAAGGACCCTTGGCCCTCCACCCTTAGGCAGTGTATACTCTTCCATAAACGGGCTATTAGTTATGAGGTCCGAAGATTGAAAAAGGTGAGGGAACTCGGCCGAACGGGAAAGACGGACATCTAGGCAACCTGACCACGGTTGCGCGTCCGTATCAAGGTCCTCTTAATAGGCCCCCGTTACTGTTGGTCGTAGAGCCCAGAACGGGTTGGCCAGATGTGCGACAATATCGCTTAGTCGCTCTTGGGCCGCGGTGCGCTACCTTGCAGGAATTGAGACCGTCCGTTAATTTCCCTTGCATATATATTGCGTTTCTTTGACCTTTTAACCGCTCTCTTAGAAGAGAGACAGATAGCTTCTTACCGGTGCGCCACCGTAGGCAGTACGATCGCACGCCCCATGTGAACGATTGGTAAACCCAGTGTCCTGTGAGCGACAAAAGCTTAAATGGGAAATACGCGCCCATAACTTGGTGCGAATACGGGTCGTAGCAATGTTCGTCTGACTATGAT&quot;&#xd;
+	&quot;body&quot; : &quot;CAGCACCGTTTAAACCAGACCGACACTAGATCTATAAGGTCCGCCATGCAGACGAGAGCGCACGGAGATCACCGAGCGATCTATCAGATCGGCGACCATTTGTGAGGTACTGGAGCCGAGAGGTAACTACGATGCCGCTAAGAACCTCTCGGTCGTCGCTGACGTTTACACTCTAGTCTCATTATAATCGTTCGCTATTCAGGGATTGACCAACACCGGAAAACATCTCACTTGAAGTAATGTATACGACAGAGTCCGTGCACCTACCAAACCTCTTTAGTCTAAGTTCAGACTAGTTGGAAGTTTGTCTAGATCTCAGATTTTGTCACTAGAGGACGCACGCTCTATTTTTATGATCCATTGATGTCCCTGACGCTGCAAAATTTGCAACCAGGCAGTCTTCGCGGTAGGTCCTAGTGCAATGGGGCTTTTTTTCCATAGTCCTCGAGAGGAGGAGACGTCAGTCCAGATATCTTTGATGTCGTGATTGGAAGGACCCTTGGCCCTCCACCCTTAGGCAGTGTATACTCTTCCATAAACGGGCTATTAGTTATGAGGTCCGAAGATTGAAAAAGGTGAGGGAACTCGGCCGAACGGGAAAGACGGACATCTAGGCAACCTGACCACGGTTGCGCGTCCGTATCAAGGTCCTCTTAATAGGCCCCCGTTACTGTTGGTCGTAGAGCCCAGAACGGGTTGGCCAGATGTGCGACAATATCGCTTAGTCGCTCTTGGGCCGCGGTGCGCTACCTTGCAGGAATTGAGACCGTCCGTTAATTTCCCTTGCATATATATTGCGTTTCTTTGACCTTTTAACCGCTCTCTTAGAAGAGAGACAGATAGCTTCTTACCGGTGCGCCACCGTAGGCAGTACGATCGCACGCCCCATGTGAACGATTGGTAAACCCAGTGTCCTGTGAGCGACAAAAGCTTAAATGGGAAATACGCGCCCATAACTTGGTGCGAATACGGGTCGTAGCAATGTTCGTCTGACTATGAT&quot;&#xd;
 }&#xd;
 </stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
@@ -200,7 +215,7 @@
             </elementProp>
             <stringProp name="HTTPSampler.domain">${host}${files_prefix}</stringProp>
             <stringProp name="HTTPSampler.port">${port}</stringProp>
-            <stringProp name="HTTPSampler.protocol"></stringProp>
+            <stringProp name="HTTPSampler.protocol">${protocol}</stringProp>
             <stringProp name="HTTPSampler.contentEncoding"></stringProp>
             <stringProp name="HTTPSampler.path">/api/files/upload</stringProp>
             <stringProp name="HTTPSampler.method">POST</stringProp>
@@ -221,12 +236,6 @@
                 </elementProp>
               </collectionProp>
             </HeaderManager>
-            <hashTree/>
-            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="RetrieveFilename" enabled="true">
-              <stringProp name="JSONPostProcessor.referenceNames">uploadFilename</stringProp>
-              <stringProp name="JSONPostProcessor.jsonPathExprs">$.filename</stringProp>
-              <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
-            </JSONPostProcessor>
             <hashTree/>
           </hashTree>
         </hashTree>
@@ -251,7 +260,7 @@
             </elementProp>
             <stringProp name="HTTPSampler.domain">${host}${files_prefix}</stringProp>
             <stringProp name="HTTPSampler.port">${port}</stringProp>
-            <stringProp name="HTTPSampler.protocol"></stringProp>
+            <stringProp name="HTTPSampler.protocol">${protocol}</stringProp>
             <stringProp name="HTTPSampler.contentEncoding"></stringProp>
             <stringProp name="HTTPSampler.path">/api/files/upload</stringProp>
             <stringProp name="HTTPSampler.method">POST</stringProp>
@@ -263,14 +272,7 @@
             <stringProp name="HTTPSampler.connect_timeout"></stringProp>
             <stringProp name="HTTPSampler.response_timeout"></stringProp>
           </HTTPSamplerProxy>
-          <hashTree>
-            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="RetrieveFilename" enabled="true">
-              <stringProp name="JSONPostProcessor.referenceNames">uploadFilename</stringProp>
-              <stringProp name="JSONPostProcessor.jsonPathExprs">$.filename</stringProp>
-              <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
-            </JSONPostProcessor>
-            <hashTree/>
-          </hashTree>
+          <hashTree/>
         </hashTree>
         <TestAction guiclass="TestActionGui" testclass="TestAction" testname="Think Time" enabled="true">
           <intProp name="ActionProcessor.action">1</intProp>
@@ -284,7 +286,7 @@
           </UniformRandomTimer>
           <hashTree/>
         </hashTree>
-        <SystemSampler guiclass="SystemSamplerGui" testclass="SystemSampler" testname="Cleanup Storage Windows" enabled="true">
+        <SystemSampler guiclass="SystemSamplerGui" testclass="SystemSampler" testname="Cleanup Storage Windows" enabled="false">
           <boolProp name="SystemSampler.checkReturnCode">false</boolProp>
           <stringProp name="SystemSampler.expectedReturnCode">0</stringProp>
           <stringProp name="SystemSampler.command">powershell</stringProp>
@@ -324,7 +326,7 @@
           </elementProp>
           <stringProp name="HTTPSampler.domain">${host}${analysis_prefix}</stringProp>
           <stringProp name="HTTPSampler.port">${port}</stringProp>
-          <stringProp name="HTTPSampler.protocol"></stringProp>
+          <stringProp name="HTTPSampler.protocol">${protocol}</stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
           <stringProp name="HTTPSampler.path">api/analysis/create?name=${analysis_file_1000}&amp;length=${seq_length_analysis_10}</stringProp>
           <stringProp name="HTTPSampler.method">POST</stringProp>
@@ -337,7 +339,16 @@
           <stringProp name="HTTPSampler.response_timeout"></stringProp>
         </HTTPSamplerProxy>
         <hashTree>
-          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="RetrieveFilename" enabled="true">
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+            <collectionProp name="HeaderManager.headers">
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Content-Type</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+            </collectionProp>
+          </HeaderManager>
+          <hashTree/>
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="RetrieveFilename" enabled="false">
             <stringProp name="JSONPostProcessor.referenceNames">resultsFilename1</stringProp>
             <stringProp name="JSONPostProcessor.jsonPathExprs">$.filename</stringProp>
             <stringProp name="JSONPostProcessor.match_numbers">1</stringProp>
@@ -363,9 +374,9 @@
               <elementProp name="" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
                 <stringProp name="Argument.value">{&#xd;
-	name: &quot;compare123&quot;,&#xd;
-	length: ${seq_length_compare_10},&#xd;
-	files: ${compare_files_10k_1M}&#xd;
+	&quot;name&quot;: &quot;compare123&quot;,&#xd;
+	&quot;length&quot;: ${seq_length_compare_10},&#xd;
+	&quot;files&quot;: ${compare_files_10k_1M}&#xd;
 }</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
               </elementProp>
@@ -373,7 +384,7 @@
           </elementProp>
           <stringProp name="HTTPSampler.domain">${host}${analysis_prefix}</stringProp>
           <stringProp name="HTTPSampler.port">${port}</stringProp>
-          <stringProp name="HTTPSampler.protocol"></stringProp>
+          <stringProp name="HTTPSampler.protocol">${protocol}</stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
           <stringProp name="HTTPSampler.path">api/analysis/compare</stringProp>
           <stringProp name="HTTPSampler.method">POST</stringProp>
@@ -395,7 +406,7 @@
             </collectionProp>
           </HeaderManager>
           <hashTree/>
-          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="RetrieveFilename" enabled="true">
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="RetrieveFilename" enabled="false">
             <stringProp name="JSONPostProcessor.referenceNames">resultsFilename2</stringProp>
             <stringProp name="JSONPostProcessor.jsonPathExprs">$.filename</stringProp>
             <stringProp name="JSONPostProcessor.match_numbers">1</stringProp>
@@ -414,7 +425,7 @@
           </UniformRandomTimer>
           <hashTree/>
         </hashTree>
-        <SystemSampler guiclass="SystemSamplerGui" testclass="SystemSampler" testname="Cleanup Storage Windows" enabled="true">
+        <SystemSampler guiclass="SystemSamplerGui" testclass="SystemSampler" testname="Cleanup Storage Windows" enabled="false">
           <boolProp name="SystemSampler.checkReturnCode">false</boolProp>
           <stringProp name="SystemSampler.expectedReturnCode">0</stringProp>
           <stringProp name="SystemSampler.command">powershell</stringProp>
@@ -462,7 +473,7 @@
           </elementProp>
           <stringProp name="HTTPSampler.domain">${host}${reports_prefix}</stringProp>
           <stringProp name="HTTPSampler.port">${port}</stringProp>
-          <stringProp name="HTTPSampler.protocol"></stringProp>
+          <stringProp name="HTTPSampler.protocol">${protocol}</stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
           <stringProp name="HTTPSampler.path">/api/report/get</stringProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
@@ -600,7 +611,7 @@
       </BackendListener>
       <hashTree/>
       <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="CSV Data Set Config" enabled="true">
-        <stringProp name="filename">C:/Projects/Serverless-TestApp/Evaluation/TestPlans/TestApp.Config.local.monolith</stringProp>
+        <stringProp name="filename">C:/Projects/Serverless-TestApp/Evaluation/TestPlans/TestApp.Config.amazon.lambda</stringProp>
         <stringProp name="fileEncoding"></stringProp>
         <stringProp name="variableNames"></stringProp>
         <boolProp name="ignoreFirstLine">false</boolProp>
