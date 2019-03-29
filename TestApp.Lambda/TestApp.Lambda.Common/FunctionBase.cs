@@ -16,12 +16,17 @@ namespace TestApp.Lambda.Common
 
         protected FunctionResult Ok(object value) => new FunctionResult(200, "Ok", value);
 
-        protected FunctionResult BadRequest(object value) => new FunctionResult(400, "BadRequest", value);
+        protected FunctionResult BadRequest(object value) => this.ErrorResponse(new FunctionResult(400, "BadRequest", value));
 
-        protected FunctionResult Unauthorized() => new FunctionResult(401, "Unauthorized");
+        protected FunctionResult Unauthorized() => this.ErrorResponse(new FunctionResult(401, "Unauthorized"));
 
         protected FunctionResult NoContent() => new FunctionResult(204, "NoContent");
 
-        protected FunctionResult NotFound(object value) => new FunctionResult(404, "NotFound", value);
+        protected FunctionResult NotFound(object value) => this.ErrorResponse(new FunctionResult(404, "NotFound", value));
+
+        private FunctionResult ErrorResponse(FunctionResult result)
+        {
+            throw new ArgumentException(Newtonsoft.Json.JsonConvert.SerializeObject(result));            
+        }
     }
 }
