@@ -9,6 +9,9 @@ Evaluation/Results
 builds/
 Scripts/deploy
 
+# AWS Config
+aws-lambda-tools-defaults.json
+
 # User-specific files
 *.rsuser
 *.suo
