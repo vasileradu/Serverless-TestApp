@@ -103,7 +103,7 @@
           </elementProp>
           <stringProp name="HTTPSampler.domain">${host}${auth_prefix}</stringProp>
           <stringProp name="HTTPSampler.port">${port}</stringProp>
-          <stringProp name="HTTPSampler.protocol"></stringProp>
+          <stringProp name="HTTPSampler.protocol">${protocol}</stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
           <stringProp name="HTTPSampler.path">/api/auth/token/get</stringProp>
           <stringProp name="HTTPSampler.method">POST</stringProp>
@@ -145,7 +145,7 @@
           <hashTree/>
         </hashTree>
         <IfController guiclass="IfControllerPanel" testclass="IfController" testname="IF AMAZON" enabled="true">
-          <stringProp name="IfController.condition">${__jexl3(${__P(is_amazon)}}== true,)}</stringProp>
+          <stringProp name="IfController.condition">${__jexl3(${is_amazon}== true,)}</stringProp>
           <boolProp name="IfController.evaluateAll">false</boolProp>
           <boolProp name="IfController.useExpression">true</boolProp>
         </IfController>
@@ -165,7 +165,7 @@
             </elementProp>
             <stringProp name="HTTPSampler.domain">${host}${files_prefix}</stringProp>
             <stringProp name="HTTPSampler.port">${port}</stringProp>
-            <stringProp name="HTTPSampler.protocol"></stringProp>
+            <stringProp name="HTTPSampler.protocol">${protocol}</stringProp>
             <stringProp name="HTTPSampler.contentEncoding"></stringProp>
             <stringProp name="HTTPSampler.path">/api/files/upload</stringProp>
             <stringProp name="HTTPSampler.method">POST</stringProp>
@@ -196,7 +196,7 @@
           </hashTree>
         </hashTree>
         <IfController guiclass="IfControllerPanel" testclass="IfController" testname="IF NOT AMAZON" enabled="true">
-          <stringProp name="IfController.condition">${__jexl3(${__P(is_amazon)}}== false,)}</stringProp>
+          <stringProp name="IfController.condition">${__jexl3(${is_amazon}== false,)}</stringProp>
           <boolProp name="IfController.evaluateAll">false</boolProp>
           <boolProp name="IfController.useExpression">true</boolProp>
         </IfController>
@@ -216,7 +216,7 @@
             </elementProp>
             <stringProp name="HTTPSampler.domain">${host}${files_prefix}</stringProp>
             <stringProp name="HTTPSampler.port">${port}</stringProp>
-            <stringProp name="HTTPSampler.protocol"></stringProp>
+            <stringProp name="HTTPSampler.protocol">${protocol}</stringProp>
             <stringProp name="HTTPSampler.contentEncoding"></stringProp>
             <stringProp name="HTTPSampler.path">/api/files/upload</stringProp>
             <stringProp name="HTTPSampler.method">POST</stringProp>
@@ -255,7 +255,7 @@
           </elementProp>
           <stringProp name="HTTPSampler.domain">${host}${analysis_prefix}</stringProp>
           <stringProp name="HTTPSampler.port">${port}</stringProp>
-          <stringProp name="HTTPSampler.protocol"></stringProp>
+          <stringProp name="HTTPSampler.protocol">${protocol}</stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
           <stringProp name="HTTPSampler.path">api/analysis/create?name=${analysis_file_1M}&amp;length=${seq_length_analysis_10}</stringProp>
           <stringProp name="HTTPSampler.method">POST</stringProp>
@@ -301,7 +301,7 @@
           </elementProp>
           <stringProp name="HTTPSampler.domain">${host}${reports_prefix}</stringProp>
           <stringProp name="HTTPSampler.port">${port}</stringProp>
-          <stringProp name="HTTPSampler.protocol"></stringProp>
+          <stringProp name="HTTPSampler.protocol">${protocol}</stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
           <stringProp name="HTTPSampler.path">/api/report/get</stringProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
@@ -332,7 +332,7 @@
           </elementProp>
           <stringProp name="HTTPSampler.domain">${host}${auth_prefix}</stringProp>
           <stringProp name="HTTPSampler.port">${port}</stringProp>
-          <stringProp name="HTTPSampler.protocol"></stringProp>
+          <stringProp name="HTTPSampler.protocol">${protocol}</stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
           <stringProp name="HTTPSampler.path">/api/auth/token/remove?token=${token}</stringProp>
           <stringProp name="HTTPSampler.method">POST</stringProp>
@@ -417,7 +417,7 @@
           </elementProp>
           <stringProp name="HTTPSampler.domain">${host}${auth_prefix}</stringProp>
           <stringProp name="HTTPSampler.port">${port}</stringProp>
-          <stringProp name="HTTPSampler.protocol"></stringProp>
+          <stringProp name="HTTPSampler.protocol">${protocol}</stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
           <stringProp name="HTTPSampler.path">/api/auth/token/get</stringProp>
           <stringProp name="HTTPSampler.method">POST</stringProp>
@@ -459,7 +459,7 @@
           <hashTree/>
         </hashTree>
         <IfController guiclass="IfControllerPanel" testclass="IfController" testname="IF AMAZON" enabled="true">
-          <stringProp name="IfController.condition">${__jexl3(${__P(is_amazon)}}== true,)}</stringProp>
+          <stringProp name="IfController.condition">${__jexl3(${is_amazon}== true,)}</stringProp>
           <boolProp name="IfController.evaluateAll">false</boolProp>
           <boolProp name="IfController.useExpression">true</boolProp>
         </IfController>
@@ -479,7 +479,7 @@
             </elementProp>
             <stringProp name="HTTPSampler.domain">${host}${files_prefix}</stringProp>
             <stringProp name="HTTPSampler.port">${port}</stringProp>
-            <stringProp name="HTTPSampler.protocol"></stringProp>
+            <stringProp name="HTTPSampler.protocol">${protocol}</stringProp>
             <stringProp name="HTTPSampler.contentEncoding"></stringProp>
             <stringProp name="HTTPSampler.path">/api/files/upload</stringProp>
             <stringProp name="HTTPSampler.method">POST</stringProp>
@@ -510,7 +510,7 @@
           </hashTree>
         </hashTree>
         <IfController guiclass="IfControllerPanel" testclass="IfController" testname="IF NOT AMAZON" enabled="true">
-          <stringProp name="IfController.condition">${__jexl3(${__P(is_amazon)}}== false,)}</stringProp>
+          <stringProp name="IfController.condition">${__jexl3(${is_amazon}== false,)}</stringProp>
           <boolProp name="IfController.evaluateAll">false</boolProp>
           <boolProp name="IfController.useExpression">true</boolProp>
         </IfController>
@@ -530,7 +530,7 @@
             </elementProp>
             <stringProp name="HTTPSampler.domain">${host}${files_prefix}</stringProp>
             <stringProp name="HTTPSampler.port">${port}</stringProp>
-            <stringProp name="HTTPSampler.protocol"></stringProp>
+            <stringProp name="HTTPSampler.protocol">${protocol}</stringProp>
             <stringProp name="HTTPSampler.contentEncoding"></stringProp>
             <stringProp name="HTTPSampler.path">/api/files/upload</stringProp>
             <stringProp name="HTTPSampler.method">POST</stringProp>
@@ -569,7 +569,7 @@
           </elementProp>
           <stringProp name="HTTPSampler.domain">${host}${analysis_prefix}</stringProp>
           <stringProp name="HTTPSampler.port">${port}</stringProp>
-          <stringProp name="HTTPSampler.protocol"></stringProp>
+          <stringProp name="HTTPSampler.protocol">${protocol}</stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
           <stringProp name="HTTPSampler.path">api/analysis/create?name=${analysis_file_10000}&amp;length=${seq_length_analysis_10}</stringProp>
           <stringProp name="HTTPSampler.method">POST</stringProp>
@@ -618,7 +618,7 @@
           </elementProp>
           <stringProp name="HTTPSampler.domain">${host}${analysis_prefix}</stringProp>
           <stringProp name="HTTPSampler.port">${port}</stringProp>
-          <stringProp name="HTTPSampler.protocol"></stringProp>
+          <stringProp name="HTTPSampler.protocol">${protocol}</stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
           <stringProp name="HTTPSampler.path">api/analysis/compare</stringProp>
           <stringProp name="HTTPSampler.method">POST</stringProp>
@@ -665,7 +665,7 @@
           </elementProp>
           <stringProp name="HTTPSampler.domain">${host}${auth_prefix}</stringProp>
           <stringProp name="HTTPSampler.port">${port}</stringProp>
-          <stringProp name="HTTPSampler.protocol"></stringProp>
+          <stringProp name="HTTPSampler.protocol">${protocol}</stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
           <stringProp name="HTTPSampler.path">/api/auth/token/remove?token=${token}</stringProp>
           <stringProp name="HTTPSampler.method">POST</stringProp>
@@ -750,7 +750,7 @@
           </elementProp>
           <stringProp name="HTTPSampler.domain">${host}${auth_prefix}</stringProp>
           <stringProp name="HTTPSampler.port">${port}</stringProp>
-          <stringProp name="HTTPSampler.protocol"></stringProp>
+          <stringProp name="HTTPSampler.protocol">${protocol}</stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
           <stringProp name="HTTPSampler.path">/api/auth/token/get</stringProp>
           <stringProp name="HTTPSampler.method">POST</stringProp>
@@ -808,7 +808,7 @@
           </elementProp>
           <stringProp name="HTTPSampler.domain">${host}${analysis_prefix}</stringProp>
           <stringProp name="HTTPSampler.port">${port}</stringProp>
-          <stringProp name="HTTPSampler.protocol"></stringProp>
+          <stringProp name="HTTPSampler.protocol">${protocol}</stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
           <stringProp name="HTTPSampler.path">api/analysis/compare</stringProp>
           <stringProp name="HTTPSampler.method">POST</stringProp>
@@ -863,7 +863,7 @@
           </elementProp>
           <stringProp name="HTTPSampler.domain">${host}${reports_prefix}</stringProp>
           <stringProp name="HTTPSampler.port">${port}</stringProp>
-          <stringProp name="HTTPSampler.protocol"></stringProp>
+          <stringProp name="HTTPSampler.protocol">${protocol}</stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
           <stringProp name="HTTPSampler.path">/api/report/get</stringProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
@@ -894,7 +894,7 @@
           </elementProp>
           <stringProp name="HTTPSampler.domain">${host}${auth_prefix}</stringProp>
           <stringProp name="HTTPSampler.port">${port}</stringProp>
-          <stringProp name="HTTPSampler.protocol"></stringProp>
+          <stringProp name="HTTPSampler.protocol">${protocol}</stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
           <stringProp name="HTTPSampler.path">/api/auth/token/remove?token=${token}</stringProp>
           <stringProp name="HTTPSampler.method">POST</stringProp>
@@ -979,7 +979,7 @@
           </elementProp>
           <stringProp name="HTTPSampler.domain">${host}${auth_prefix}</stringProp>
           <stringProp name="HTTPSampler.port">${port}</stringProp>
-          <stringProp name="HTTPSampler.protocol"></stringProp>
+          <stringProp name="HTTPSampler.protocol">${protocol}</stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
           <stringProp name="HTTPSampler.path">/api/auth/token/get</stringProp>
           <stringProp name="HTTPSampler.method">POST</stringProp>
@@ -1034,7 +1034,7 @@
           </elementProp>
           <stringProp name="HTTPSampler.domain">${host}${reports_prefix}</stringProp>
           <stringProp name="HTTPSampler.port">${port}</stringProp>
-          <stringProp name="HTTPSampler.protocol"></stringProp>
+          <stringProp name="HTTPSampler.protocol">${protocol}</stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
           <stringProp name="HTTPSampler.path">/api/report/get</stringProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
@@ -1065,7 +1065,7 @@
           </elementProp>
           <stringProp name="HTTPSampler.domain">${host}${auth_prefix}</stringProp>
           <stringProp name="HTTPSampler.port">${port}</stringProp>
-          <stringProp name="HTTPSampler.protocol"></stringProp>
+          <stringProp name="HTTPSampler.protocol">${protocol}</stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
           <stringProp name="HTTPSampler.path">/api/auth/token/remove?token=${token}</stringProp>
           <stringProp name="HTTPSampler.method">POST</stringProp>
