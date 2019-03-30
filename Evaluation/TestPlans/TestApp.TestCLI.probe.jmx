@@ -617,7 +617,7 @@
       </BackendListener>
       <hashTree/>
       <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="CSV Data Set Config" enabled="true">
-        <stringProp name="filename">C:/Projects/Serverless-TestApp/Evaluation/TestPlans/TestApp.Config.local.monolith</stringProp>
+        <stringProp name="filename">C:/Projects/Serverless-TestApp/Evaluation/TestPlans/TestApp.Config.amazon.lambda</stringProp>
         <stringProp name="fileEncoding"></stringProp>
         <stringProp name="variableNames"></stringProp>
         <boolProp name="ignoreFirstLine">false</boolProp>

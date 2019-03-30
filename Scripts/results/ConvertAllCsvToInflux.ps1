@@ -185,12 +185,12 @@ $phase = $path.Split("\")[-1];
 $epoch = Get-Date -Year 1970 -Month 1 -Day 1 -Hour 0 -Minute 0 -Second 0
 $newStartDate = Get-Date -Date "2020-01-01 00:00:01Z"
 $newStartDateMs = [math]::truncate($newStartDate.Subtract($epoch).TotalMilliSeconds)
-
+$fileIndex=0;
 $lines = 0;
 
-if (!(Test-Path $output)) {
-	New-Item -ItemType File -Force -Path $output
-}
+# if (!(Test-Path $output)) {
+	# New-Item -ItemType File -Force -Path $output
+# }
 
 Get-ChildItem $path | Where-Object {($_.Name.StartsWith("jmeter") -and ($_.Extension -eq ".results"))} | ForEach-Object {
 	# detect tags
@@ -198,17 +198,20 @@ Get-ChildItem $path | Where-Object {($_.Name.StartsWith("jmeter") -and ($_.Exten
 	$application=$_.Name.Split(".")[-2]
 	$tags="phase=$phase,environment=$environment,application=$application";
 	
-	# add jmeter content
-	$lines += Add-JmeterContent -metricName "requestsRaw" -inputFile $_.FullName -output $output -tags $tags -newStartDateMs $newStartDateMs
 	
+	# add jmeter content
+	$lines += Add-JmeterContent -metricName "requestsRaw" -inputFile $_.FullName -output $output"_$fileIndex" -tags $tags -newStartDateMs $newStartDateMs	
+	$fileIndex = $fileIndex + 1;
 }
 
 $tags="phase=$phase";
 
 Get-ChildItem $path | Where-Object {($_.Name.StartsWith("telegraf") -and ($_.Extension -eq ".out"))} | ForEach-Object {
 	# add telegraf content
-	$lines += Add-TelegrafContent -inputFile $_.FullName -output $output -tags $tags -newStartDateMs $newStartDateMs
-
+	$lines += Add-TelegrafContent -inputFile $_.FullName -output $output"_$fileIndex" -tags $tags -newStartDateMs $newStartDateMs
+	
+	$fileIndex = $fileIndex + 1;
+	
 }
 
 Write-Host "Wrote $lines lines to $output" -ForegroundColor Yellow
