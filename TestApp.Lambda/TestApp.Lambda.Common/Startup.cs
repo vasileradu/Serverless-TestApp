@@ -27,13 +27,24 @@ namespace TestApp.Lambda
 
         public Startup Configure()
         {
-            if (this.IsDevelopment())
+            switch (this.GetEnvironmentType())
             {
-                this.ConfigureDevelopmentServices(this._services);                
-            }
-            else
-            {
-                this.ConfigureServices(this._services);
+                case "Development":
+                    {
+                        this.ConfigureDevelopmentServices(this._services);
+                    }
+                    break;
+                case "NoDependencies":
+                    {
+                        this.ConfigureNoDependenciesServices(this._services);
+                    }
+                    break;
+                default:
+                case "Production":
+                    {
+                        this.ConfigureServices(this._services);
+                    }
+                    break;
             }
 
             return this;
@@ -67,6 +78,13 @@ namespace TestApp.Lambda
                     Environment.GetEnvironmentVariable("Storage_Locations_Reports"))));
         }
 
+        private void ConfigureNoDependenciesServices(IServiceCollection services)
+        {
+            services.AddTransient<IDataRepository, MockFileRepository>();
+            services.AddTransient<IUserRepository, MockRepository>();
+            services.AddTransient<ITokenRepository, MockRepository>();
+        }
+
         private void ConfigureCommonServices(IServiceCollection services)
         {
             services.AddTransient<IUserRepository, UserRepository>();
@@ -76,11 +94,9 @@ namespace TestApp.Lambda
                 options.UseSqlServer(Environment.GetEnvironmentVariable("ConnectionStrings_AuthDb")));
         }
 
-        private bool IsDevelopment()
+        private string GetEnvironmentType()
         {
-            string envType = Environment.GetEnvironmentVariable("EnvironmentType") ?? "Development";
-
-            return envType.Equals("Development");
+            return Environment.GetEnvironmentVariable("EnvironmentType") ?? "Development";
         }
 
         // Load variables from appsettings.json;
