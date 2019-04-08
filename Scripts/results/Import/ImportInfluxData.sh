@@ -8,6 +8,7 @@ curl -i -XPOST http://localhost:8086/query --data-urlencode "q=DROP DATABASE Tes
 curl -i -XPOST http://localhost:8086/query --data-urlencode "q=CREATE DATABASE TestApp"
 
 fileCount=0;
+index=1;
 
 FILES=./influx*
 for f in $FILES
@@ -20,10 +21,12 @@ echo "----------------------------------------"
 
 for f in $FILES
 do
-  echo "Processing $f file..."
+  echo "Processing $f file...[ $index / $fileCount ]"
+  
+  index=$((index + 1))
+  
   curl -i -XPOST "http://localhost:8086/write?db=TestApp&precision=ns" --data-binary @$f
 done
 
 echo "Processed [$fileCount] files"
 echo "----------------------------------------"
-

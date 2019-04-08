@@ -10,9 +10,13 @@ Enter-PSSession -ComputerName testapp-jmeter.westeurope.cloudapp.azure.com -Cred
 
 
 ## Copy files from jmeter win VM
-Copy-Item –Path 'C:\Results\*' –FromSession (New-PSSession –ComputerName testapp-jmeter.westeurope.cloudapp.azure.com -Credential $cred) –Destination 'C:\Projects\Serverless-TestApp\Evaluation\Results\phase6'
+Copy-Item –Path 'C:\Results\*' –FromSession (New-PSSession –ComputerName testapp-jmeter.westeurope.cloudapp.azure.com -Credential $cred) –Destination 'C:\Projects\Serverless-TestApp\Evaluation\Results\'
 
+## Copy testplans to JMETER
 Copy-Item –Path 'C:\Projects\Serverless-TestApp\Evaluation\TestPlans\*.Config.*'  –Destination 'C:\jmeter\testplans' –ToSession (New-PSSession –ComputerName testapp-jmeter.westeurope.cloudapp.azure.com -Credential $cred)
+
+## Copy jmter.config to JMETER
+Copy-Item –Path 'C:\Projects\Serverless-TestApp\Evaluation\Tools\jmeter.bat'  –Destination 'C:\jmeter\apache-jmeter-5.0\bin' –ToSession (New-PSSession –ComputerName testapp-jmeter.westeurope.cloudapp.azure.com -Credential $cred)
 
 
 az vmss diagnostics set --resource-group TestApp --vmss-name "vmssmonolith" --settings ".\vmss.monolith.config.json" --protected-settings "C:\Projects\Serverless-TestApp\SecretConfig\vmss.secret.config.json"

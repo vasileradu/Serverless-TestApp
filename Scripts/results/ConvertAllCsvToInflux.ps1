@@ -23,6 +23,7 @@ function Add-JmeterContent ($metricName, $inputFile, $output, $tags, $newStartDa
 	$additionalMs = [long]0;
 	$usersPerScenario = @(0,0,0,0);	
 	$lines = 0;
+	$maxLinesPerFile = 100000;
 
 	Get-Content $inputFile | Select-Object -Skip 1 | Sort-Object -Property @{Expression = {$_.Split($delimiter)[$timestampIndex]}} | ForEach-Object {
 		
@@ -33,8 +34,10 @@ function Add-JmeterContent ($metricName, $inputFile, $output, $tags, $newStartDa
 		$values = $_.Split($delimiter)		
 		$lastValue = ""
 		
-		$starTags = ""; # filtreable
-		$endTags = ""; # non-filtreable
+		$starTags = [System.Text.StringBuilder]::new()
+		$endTags = [System.Text.StringBuilder]::new()
+		#$starTags = ""; # filtreable
+		#$endTags = ""; # non-filtreable
 		
 				
 		for ($index = 0; $index -lt $values.count; $index++) {
@@ -85,7 +88,8 @@ function Add-JmeterContent ($metricName, $inputFile, $output, $tags, $newStartDa
 						$allThreads += $usersPerScenario[$i]
 					}				
 					
-					$endTags += "startedThreads=" + $allThreads + $delimiter
+					#$endTags += "startedThreads=" + $allThreads + $delimiter
+					[void]$endTags.Append("startedThreads=$allThreads$delimiter");
 				}
 				$success {
 					# key should be 'errorCount'
@@ -104,21 +108,34 @@ function Add-JmeterContent ($metricName, $inputFile, $output, $tags, $newStartDa
 			}			
 			
 			if($filterTagsIndexes.Contains($index)) {
-				$starTags += $delimiter + $key + "=" + $value
+				#$starTags += $delimiter + $key + "=" + $value
+				[void]$starTags.Append("$delimiter$key=$value");
 			} else {
-				$endTags += $key + "=" + $value
+				#$endTags += $key + "=" + $value
+				[void]$endTags.Append("$key=$value");
 				# do not add delimiter after last value.
 				if($index -lt $values.count - 1) {
-					$endTags += $delimiter
+					#$endTags += $delimiter
+					[void]$endTags.Append("$delimiter");
 				}
 			}			
 		}
 		
-		$newRow = "$metricName," + $tags + $starTags + " " + $endTags + " " + $lastValue;
+		#$newRow = "$metricName," + $tags + $starTags + " " + $endTags + " " + $lastValue;
+		
+		$newRow = [System.Text.StringBuilder]::new()
+		[void]$newRow.Append("$metricName,$tags");
+		[void]$newRow.Append($starTags.ToString());
+		[void]$newRow.Append(" ");
+		[void]$newRow.Append($endTags.ToString());
+		[void]$newRow.Append(" $lastValue`n");		
+		
 		$lines++;
 		
-		return "$newRow`n"
-	} | Add-Content -Path $output -NoNewline -Encoding "ascii"
+		#return "$newRow`n"
+		return $newRow.ToString();
+		
+	} | Out-File $output -Append -NoNewline -Encoding "ascii" 
 	
 	return $lines;
 }
@@ -173,7 +190,7 @@ function Add-TelegrafContent($inputFile, $output, $tags, $newStartDateMs) {
 		
 		return "$newRow`n"
 		
-	} | Add-Content -Path $output -NoNewline -Encoding "ascii"
+	} | Out-File $output -Append -NoNewline -Encoding "ascii"
 	
 	return $lines;
 }
@@ -200,17 +217,14 @@ Get-ChildItem $path | Where-Object {($_.Name.StartsWith("jmeter") -and ($_.Exten
 	
 	
 	# add jmeter content
-	$lines += Add-JmeterContent -metricName "requestsRaw" -inputFile $_.FullName -output $output"_$fileIndex" -tags $tags -newStartDateMs $newStartDateMs	
-	$fileIndex = $fileIndex + 1;
+	$lines += Add-JmeterContent -metricName "requestsRaw" -inputFile $_.FullName -output $output -tags $tags -newStartDateMs $newStartDateMs		
 }
 
 $tags="phase=$phase";
 
 Get-ChildItem $path | Where-Object {($_.Name.StartsWith("telegraf") -and ($_.Extension -eq ".out"))} | ForEach-Object {
 	# add telegraf content
-	$lines += Add-TelegrafContent -inputFile $_.FullName -output $output"_$fileIndex" -tags $tags -newStartDateMs $newStartDateMs
-	
-	$fileIndex = $fileIndex + 1;
+	$lines += Add-TelegrafContent -inputFile $_.FullName -output $output -tags $tags -newStartDateMs $newStartDateMs
 	
 }
 
