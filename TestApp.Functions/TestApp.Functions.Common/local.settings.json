@@ -1,0 +1,13 @@
+{
+  "IsEncrypted": false,
+  "Values": {
+    "AzureWebJobsStorage": "UseDevelopmentStorage=true",
+    "FUNCTIONS_WORKER_RUNTIME": "dotnet",
+    "Storage_Locations_Root": "C:\\Projects\\Serverless-TestApp\\Storage",
+    "Storage_Locations_Uploads": "Uploads",
+    "Storage_Locations_Reports": "Reports",
+    "ConnectionStrings_Storage": "",
+    "ConnectionStrings_AuthDb": "Server=LUW10VASILER\\SQLEXPRESS;Database=TestAppAuth;Trusted_Connection=True;MultipleActiveResultSets=true;",
+    "EnvironmentType": "Development"
+  }
+}
