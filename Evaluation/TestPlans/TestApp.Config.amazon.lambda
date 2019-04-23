@@ -1,2 +1,2 @@
-protocol|host|analysis_prefix|auth_prefix|reports_prefix|files_prefix|port|storage|is_amazon
-https|k5b81543na.execute-api.eu-central-1.amazonaws.com/Prod||||||Z:\\|true
+protocol|host|analysis_create_prefix|analysis_compare_prefix|auth_login_prefix|auth_logout_prefix|reports_prefix|files_prefix|port|storage|is_amazon
+https|k5b81543na.execute-api.eu-central-1.amazonaws.com/Prod||||||||Z:\\|true

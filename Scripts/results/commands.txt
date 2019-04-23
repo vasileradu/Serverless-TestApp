@@ -15,10 +15,14 @@ Copy-Item –Path 'C:\Results\*' –FromSession (New-PSSession –ComputerName t
 ## Copy testplans to JMETER
 Copy-Item –Path 'C:\Projects\Serverless-TestApp\Evaluation\TestPlans\*.Config.*'  –Destination 'C:\jmeter\testplans' –ToSession (New-PSSession –ComputerName testapp-jmeter.westeurope.cloudapp.azure.com -Credential $cred)
 
+Copy-Item –Path 'C:\Projects\Serverless-TestApp\Evaluation\TestPlans\*.TestCLI.*'  –Destination 'C:\jmeter\testplans' –ToSession (New-PSSession –ComputerName testapp-jmeter.westeurope.cloudapp.azure.com -Credential $cred)
+
 ## Copy jmter.config to JMETER
 Copy-Item –Path 'C:\Projects\Serverless-TestApp\Evaluation\Tools\jmeter.bat'  –Destination 'C:\jmeter\apache-jmeter-5.0\bin' –ToSession (New-PSSession –ComputerName testapp-jmeter.westeurope.cloudapp.azure.com -Credential $cred)
 
-
-az vmss diagnostics set --resource-group TestApp --vmss-name "vmssmonolith" --settings ".\vmss.monolith.config.json" --protected-settings "C:\Projects\Serverless-TestApp\SecretConfig\vmss.secret.config.json"
-
-az vmss extension show --name PaaSDiagnostics --resource-group TestApp --vmss-name vmssmonolith
+--- ALL
+$cred = Get-Credential;
+Copy-Item –Path 'C:\Projects\Serverless-TestApp\Evaluation\TestPlans\*.Config.*'  –Destination 'C:\jmeter\testplans' –ToSession (New-PSSession –ComputerName testapp-jmeter.westeurope.cloudapp.azure.com -Credential $cred);
+Copy-Item –Path 'C:\Projects\Serverless-TestApp\Evaluation\TestPlans\*.TestCLI.*'  –Destination 'C:\jmeter\testplans' –ToSession (New-PSSession –ComputerName testapp-jmeter.westeurope.cloudapp.azure.com -Credential $cred);
+Copy-Item –Path 'C:\Projects\Serverless-TestApp\Evaluation\Tools\jmeter.bat'  –Destination 'C:\jmeter\apache-jmeter-5.0\bin' –ToSession (New-PSSession –ComputerName testapp-jmeter.westeurope.cloudapp.azure.com -Credential $cred);
+Enter-PSSession -ComputerName testapp-jmeter.westeurope.cloudapp.azure.com -Credential $cred;
