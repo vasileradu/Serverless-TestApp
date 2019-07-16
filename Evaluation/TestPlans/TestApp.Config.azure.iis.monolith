@@ -1,2 +1,0 @@
-protocol|host|analysis_create_prefix|analysis_compare_prefix|auth_login_prefix|auth_logout_prefix|reports_prefix|files_prefix|port|storage|is_amazon
-http|testapp-monolith.westeurope.cloudapp.azure.com/monolith|||||||80|Z:\\|false

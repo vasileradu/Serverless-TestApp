@@ -8,3 +8,5 @@ cd C:\jmeter\apache-jmeter-5.0\bin
 .\jmeter -n -t C:\jmeter\TestPlans\TestApp.TestCLI.FixedDuration.jmx -JConfigFile="C:\jmeter\testplans\TestApp.Config.azure.functions" -JResultsFile="C:\results\jmeter.azure.vm.functions.results"
 
 .\jmeter -n -t C:\jmeter\TestPlans\TestApp.TestCLI.FixedDuration.jmx -JConfigFile="C:\jmeter\testplans\TestApp.Config.azure.separate.functions" -JResultsFile="C:\results\jmeter.azure.vm.functions_6.results"
+
+.\jmeter -n -t C:\jmeter\TestPlans\TestApp.TestCLI.FixedDuration.DataSize.jmx -JConfigFile="C:\jmeter\testplans\TestApp.Config.azure.separate.functions" -JResultsFile="C:\results\jmeter.azure.vm.functions.results.p1.seq20" -Js1_users=6 -Js2_users=10 -Js3_users=10 -Js4_users=14 -Jrampup=600 -Jduration=1800 -Jseq_length=20

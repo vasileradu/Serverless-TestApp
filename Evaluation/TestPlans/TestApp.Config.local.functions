@@ -1,2 +1,0 @@
-protocol|host|analysis_create_prefix|analysis_compare_prefix|auth_login_prefix|auth_logout_prefix|reports_prefix|files_prefix|port|storage|is_amazon
-http|localhost|||||7071|C:\Projects\Serverless-TestApp\Storage|3|60|6|60|6|60|25|30|1800|false
